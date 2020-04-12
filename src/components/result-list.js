@@ -36,7 +36,7 @@ class ResultList extends Component {
 
             let lapsToDraw = maxLap > 36 ? maxLap : 36;
 
-            let content = [<td key="-1">Namn</td>, <td key="0">Team</td>];
+            let content = [<td key="-3">Nummer</td>, <td key="-2">Namn</td>, <td key="-1">Team</td>, <td key="0">Status</td>];
 
             for (let i = 0; i < lapsToDraw; i++) {
                 content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)
