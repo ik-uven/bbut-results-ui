@@ -14,32 +14,6 @@ class ResultList extends Component {
     }
 
     reloadResultList() {
-        // this.setState({
-        //     bbutResults: [
-        //         {
-        //             id: 2,
-        //             firstName: "Torbjörn",
-        //             lastName: "Grahn",
-        //             laps: [
-        //                 {status: "COMPLETED"},
-        //                 {status: "COMPLETED"},
-        //                 {status: "COMPLETED"},
-        //                 {status: "COMPLETED"},
-        //                 {status: "RESIGNED"}
-        //             ]
-        //         },
-        //         {
-        //             id: 1,
-        //             firstName: "Ken",
-        //             lastName: "Alexandersson",
-        //             laps: [
-        //                 {status: "COMPLETED"},
-        //                 {status: "COMPLETED"},
-        //                 {status: "RESIGNED"}
-        //             ]
-        //         }
-        //     ]
-        // });
 
         fetch('http://localhost:8080/api/participants', {
             method: 'GET',
@@ -60,10 +34,12 @@ class ResultList extends Component {
 
         const lapNumbers = maxLap => {
 
-            let content = [<td key="0"></td>];
+            let lapsToDraw = maxLap > 36 ? maxLap : 36;
 
-            for (let i = 0; i < maxLap; i++) {
-                content.push(<td key={i + 1} style={{width: 10}}>{i + 1}</td>)
+            let content = [<td key="-1">Namn</td>, <td key="0">Team</td>];
+
+            for (let i = 0; i < lapsToDraw; i++) {
+                content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)
             }
 
             return content;
@@ -77,7 +53,7 @@ class ResultList extends Component {
 
         return (
             <div>
-                <table class="table table-bordered table-sm">
+                <table className="table table-bordered table-sm">
                     <tbody>
                     <tr>
                         {lapNumbers(maxLap)}
