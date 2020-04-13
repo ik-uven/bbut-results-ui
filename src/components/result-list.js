@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ResultItem from "./result-item";
+// import getResultListMock from "./result-list-mock"
 
 class ResultList extends Component {
 
@@ -10,10 +11,15 @@ class ResultList extends Component {
             bbutResults: []
         };
 
-        this.reloadResultList = this.reloadResultList.bind(this);
+        this.loadResultList = this.loadResultList.bind(this);
+        this.getMaxLap = this.getMaxLap.bind(this);
     }
 
-    reloadResultList() {
+    componentDidMount() {
+        this.loadResultList();
+    }
+
+    loadResultList() {
 
         fetch('http://localhost:8080/api/participants', {
             method: 'GET',
@@ -27,16 +33,24 @@ class ResultList extends Component {
                 console.log(data);
             })
             .catch(console.log)
+
+        // this.setState({bbutResults: getResultListMock()})
+    }
+
+    getMaxLap() {
+        const finalMax = 26;
+        const currentMax = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
+
+        return currentMax > finalMax ? currentMax : finalMax;
     }
 
     render() {
-        const maxLap = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
 
-        const lapNumbers = maxLap => {
+        const lapNumbers = () => {
 
-            let lapsToDraw = maxLap > 36 ? maxLap : 36;
+            const lapsToDraw = this.getMaxLap();
 
-            let content = [<td key="-3">Nummer</td>, <td key="-2">Namn</td>, <td key="-1">Team</td>, <td key="0">Status</td>];
+            const content = [<td key="-4">#</td>, <td key="-3">Namn</td>, <td key="-2">Team</td>, <td key="-1">Status</td>,<td key="0">Varv</td>];
 
             for (let i = 0; i < lapsToDraw; i++) {
                 content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)
@@ -53,16 +67,16 @@ class ResultList extends Component {
 
         return (
             <div>
-                <table className="table table-bordered table-sm">
+                <table className="table table-dark table-bordered table-sm">
                     <tbody>
                     <tr>
-                        {lapNumbers(maxLap)}
+                        {lapNumbers()}
                     </tr>
                     {resultItems}
                     </tbody>
                 </table>
 
-                <button value="refresh" onClick={this.reloadResultList}>Refresh</button>
+                {/*<button value="refresh" onClick={this.reloadResultList}>Refresh</button>*/}
             </div>
         );
     }
