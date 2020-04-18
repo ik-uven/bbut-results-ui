@@ -21,10 +21,7 @@ class ResultList extends Component {
 
     loadResultList() {
 
-        fetch('http://localhost:8080/api/participants', {
-            method: 'GET',
-            mode: 'cors'
-        })
+        fetch('/api/participants')
             .then(response => {
                 return response.json()
             })
