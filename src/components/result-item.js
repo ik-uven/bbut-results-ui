@@ -10,13 +10,16 @@ const ResultItem = (props) => {
         let translation = state;
 
         switch (state) {
+            case "REGISTERED":
+                translation = "Anmäld";
+                break;
             case "ACTIVE":
                 translation = "Aktiv";
                 break;
             case "RESIGNED":
                 translation = "Avslutat";
                 break;
-            case "NOT_STARTED":
+            case "NO_SHOW":
                 translation = nbsp("Ej start");
                 break;
             default:

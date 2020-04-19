@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ResultItem from "./result-item";
+import SockJsClient from "react-stomp";
 // import getResultListMock from "./result-list-mock"
 
 class ResultList extends Component {
@@ -8,6 +9,7 @@ class ResultList extends Component {
         super(props);
 
         this.state = {
+            clientConnected: false,
             bbutResults: []
         };
 
@@ -40,6 +42,30 @@ class ResultList extends Component {
 
         return currentMax > finalMax ? currentMax : finalMax;
     }
+    //
+    // connect() {
+    //
+    //     const socket = new SockJS('/api/live');
+    //     this.stompClient = Stomp.over(socket);
+    //
+    //     this.stompClient.connect({}, function(frame) {
+    //
+    //         console.log('Connected: ' + frame);
+    //         this.stompClient.subscribe('/topics/results', data => {
+    //             this.setState({bbutResults: data});
+    //         });
+    //     });
+    // }
+    //
+    // disconnect() {
+    //
+    //     if(this.stompClient != null) {
+    //         this.stompClient.disconnect();
+    //     }
+    //
+    //     console.log("Disconnected");
+    // }
+
 
     render() {
 
@@ -64,6 +90,12 @@ class ResultList extends Component {
 
         return (
             <div>
+                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
+                              onMessage={ (data) => this.setState({bbutResults: data}) } ref={ (client) => { this.clientRef = client }}
+                              onConnect={ () => { this.setState({ clientConnected: true }) } }
+                              onDisconnect={ () => { this.setState({ clientConnected: false }) } }
+                              debug={ true }/>
+
                 <table className="table table-dark table-bordered table-sm">
                     <tbody>
                     <tr>
