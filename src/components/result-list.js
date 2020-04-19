@@ -42,30 +42,6 @@ class ResultList extends Component {
 
         return currentMax > finalMax ? currentMax : finalMax;
     }
-    //
-    // connect() {
-    //
-    //     const socket = new SockJS('/api/live');
-    //     this.stompClient = Stomp.over(socket);
-    //
-    //     this.stompClient.connect({}, function(frame) {
-    //
-    //         console.log('Connected: ' + frame);
-    //         this.stompClient.subscribe('/topics/results', data => {
-    //             this.setState({bbutResults: data});
-    //         });
-    //     });
-    // }
-    //
-    // disconnect() {
-    //
-    //     if(this.stompClient != null) {
-    //         this.stompClient.disconnect();
-    //     }
-    //
-    //     console.log("Disconnected");
-    // }
-
 
     render() {
 
@@ -104,8 +80,6 @@ class ResultList extends Component {
                     {resultItems}
                     </tbody>
                 </table>
-
-                {/*<button value="refresh" onClick={this.reloadResultList}>Refresh</button>*/}
             </div>
         );
     }
