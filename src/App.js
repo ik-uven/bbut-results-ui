@@ -3,6 +3,7 @@ import './App.css';
 import ResultList from "./components/result-list";
 import LapRegistrator from "./components/lap-registrator";
 import {Route, Switch} from 'react-router-dom';
+import BbutQrReader from "./components/bbut-qr-reader";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
             <Switch>
                 <Route path="/" component={ResultList} exact />
                 <Route path="/admin" component={LapRegistrator} />
+                <Route path="/reader" component={BbutQrReader} />
                 <Route component={Error} />
             </Switch>
         </div>
