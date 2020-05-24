@@ -38,16 +38,22 @@ class LapRegistrator extends Component {
                 lapState: lapState
             })
         })
-            .then(response => console.log(response.status))
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.refresh(id, data))
             .catch(console.log);
     };
 
     deleteLatestLap(id, lapId) {
-        console.log('/api/participants/' + id + '/laps/' + lapId)
+        //console.log('/api/participants/' + id + '/laps/' + lapId)
         fetch('/api/participants/' + id + '/laps/' + lapId, {
             method: 'DELETE'
         })
-            .then(response => console.log(response.status))
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.refresh(id, data))
             .catch(console.log);
     }
 
@@ -56,15 +62,25 @@ class LapRegistrator extends Component {
             method: 'PUT',
             headers: {"Content-Type": "application/json"}
         })
-            .then(response => console.log(response.status))
+            .then(response => {
+                return response.json()
+            })
+            .then(data => this.refresh(id, data))
             .catch(console.log);
+    }
+
+    refresh(id, data) {
+        const idx = this.state.bbutResults.findIndex(element => element.id === id)
+        let newResults = [...this.state.bbutResults];
+        newResults[idx] = data;
+        this.setState({bbutResults: newResults});
     }
 
     render() {
 
         const nbsp = (string) => {
             return string !== null ? string.replace(/ /g, "\u00a0") : string;
-        }
+        };
 
         const compareOnStartNumber = (resultA, resultB) => {
             const num1 = resultA.id;
@@ -78,28 +94,29 @@ class LapRegistrator extends Component {
             }
 
             return comparison;
-        }
+        };
 
         const lapButtons = this.state.bbutResults
             .sort(compareOnStartNumber)
-            .filter((result) => result.participantState !== "NO_SHOW")
+            //.filter((result) => result.participantState !== "NO_SHOW")
             .map((result) => {
                 return (
                     <tr key={result.id}>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{result.id}</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(result.firstName + " " + result.lastName)}</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(result.participantState)}</td>
+                        <td style={{width: 4 + '%', textAlign: "left"}}>{result.laps.filter(lap => lap.lapState !== "OVERDUE").length}</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registerLap"
-                                    onClick={(e) => this.registerLap(result.id, "COMPLETED")}>{nbsp("Godkänt varv")}</button>
+                                    onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registerLap"
-                                    onClick={(e) => this.registerLap(result.id, "OVERDUE")}>{nbsp("Icke godkänt varv")}</button>
+                                    onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="deleteLap"
-                                    onClick={(e) => this.deleteLatestLap(result.id, this.getLatestLapId(result), e)}>{nbsp("Ta bort senaste varv")}</button>
+                                    onClick={(e) => this.deleteLatestLap(result.id, this.getLatestLapId(result), e)}>-</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registerLap"
@@ -111,7 +128,7 @@ class LapRegistrator extends Component {
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registerLap"
-                                    onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")} disabled={result.participantState === "ACTIVE"}>{nbsp("W/O")}</button>
+                                    onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
                         </td>
                     </tr>
                 )
@@ -119,16 +136,16 @@ class LapRegistrator extends Component {
 
         return (
             <div>
-                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
+{/*                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
                               onMessage={ (data) => this.setState({bbutResults: data}) } ref={ (client) => { this.clientRef = client }}
                               onConnect={ () => { this.setState({ clientConnected: true }) } }
                               onDisconnect={ () => { this.setState({ clientConnected: false }) } }
-                              debug={ true }/>
+                              debug={ true }/>*/}
 
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>
-                        <td>#</td><td>Namn</td><td>Status</td>
+                        <td>#</td><td>Namn</td><td>Status</td><td>Laps OK</td>
                     </tr>
                     {lapButtons}
                     </tbody>
@@ -138,7 +155,7 @@ class LapRegistrator extends Component {
     }
 
     getLatestLapId(result) {
-        console.log(result.laps)
+        //console.log(result.laps)
         return Math.max.apply(Math, result.laps.map(lap => lap.number));;
     }
 }
