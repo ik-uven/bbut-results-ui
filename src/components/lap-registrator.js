@@ -96,42 +96,78 @@ class LapRegistrator extends Component {
             return comparison;
         };
 
+        const stateTranslator = (state) => {
+            let translation = state;
+
+            switch (state) {
+                case "REGISTERED":
+                    translation = "Anmäld";
+                    break;
+                case "ACTIVE":
+                    translation = "Aktiv";
+                    break;
+                case "RESIGNED":
+                    translation = "Avslutat";
+                    break;
+                case "NO_SHOW":
+                    translation = nbsp("Ej start");
+                    break;
+                default:
+                    break;
+            }
+
+            return translation;
+        };
+
         const lapButtons = this.state.bbutResults
             .sort(compareOnStartNumber)
-            //.filter((result) => result.participantState !== "NO_SHOW")
             .map((result) => {
+                console.log(result);
+                let classValue = "";
+
+                if (result.laps.length > 0) {
+                    classValue = result.laps[result.laps.length-1].state === "COMPLETED" ? "table-success" : "table-warning";
+                }
+
                 return (
                     <tr key={result.id}>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{result.id}</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(result.firstName + " " + result.lastName)}</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(result.participantState)}</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{result.laps.filter(lap => lap.lapState !== "OVERDUE").length}</td>
+                        <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(stateTranslator(result.participantState))}</td>
+                        <td style={{width: 4 + '%', textAlign: "left"}}>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td><td className={classValue}>&nbsp;</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
-                            <button value="registerLap"
+                            <button value="registerCompletedLap"
+                                    disabled={result.participantState !== "ACTIVE"}
                                     onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
-                            <button value="registerLap"
+                            <button value="registerOverdueLap"
+                                    disabled={result.participantState !== "ACTIVE"}
                                     onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="deleteLap"
+                                    disabled={result.laps.length === 0 || result.participantState !== "ACTIVE"}
                                     onClick={(e) => this.deleteLatestLap(result.id, this.getLatestLapId(result), e)}>-</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
-                            <button value="registerLap"
-                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{nbsp("Avsluta")}</button>
-                        </td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
-                            <button value="registerLap"
+                            <button value="activate"
                                     onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{nbsp("Aktivera")}</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
-                            <button value="registerLap"
+                            <button value="resign"
+                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{nbsp("Avsluta")}</button>
+                        </td>
+                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                            <button value="noShow"
                                     onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
                         </td>
+                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                            <button value="registered"
+                                    onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>{nbsp("Anmäld")}</button>
+                        </td>
                     </tr>
-                )
+                );
             });
 
         return (
@@ -145,7 +181,7 @@ class LapRegistrator extends Component {
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>
-                        <td>#</td><td>Namn</td><td>Status</td><td>Laps OK</td>
+                        <td>#</td><td>Namn</td><td>Status</td><td colSpan={2}>Varv</td><td colSpan={3}>Hantera varv</td><td colSpan={4}>Hantera status</td>
                     </tr>
                     {lapButtons}
                     </tbody>

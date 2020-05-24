@@ -4,7 +4,7 @@ const ResultItem = (props) => {
 
     const nbsp = (string) => {
         return string !== null ? string.replace(/ /g, "\u00a0") : string;
-    }
+    };
 
     const stateTranslator = (state) => {
         let translation = state;
@@ -35,7 +35,7 @@ const ResultItem = (props) => {
     const completedLapsCount = props.result.laps.filter((lap) => lap.state === "COMPLETED").length;
 
     const laps = props.result.laps.map((lap) => {
-        const classValue = lap.state === "COMPLETED" ? "table-success" : "table-warning"
+        const classValue = lap.state === "COMPLETED" ? "table-success" : "table-warning";
         return <td key={lap.number} className={classValue}>{" "}</td>
     });
 
