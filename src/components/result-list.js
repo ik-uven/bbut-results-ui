@@ -49,7 +49,7 @@ class ResultList extends Component {
 
             const lapsToDraw = this.getMaxLap();
 
-            const content = [<td key="-4">#</td>, <td key="-3">Namn</td>, <td key="-2">Team</td>, <td key="-1">Status</td>,<td key="0">Varv</td>];
+            const content = [<td key="-5">#</td>, <td key="-4">Namn</td>, <td key="-3">Klubb</td>, <td key="-2">Lagnamn</td>, <td key="-1">Status</td>,<td key="0">Varv</td>];
 
             for (let i = 0; i < lapsToDraw; i++) {
                 content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)

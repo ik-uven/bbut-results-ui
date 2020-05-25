@@ -29,8 +29,8 @@ const ResultItem = (props) => {
         return translation;
     };
 
-    const cellStyleR = {width : 4 + '%', textAlign: "right", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
-    const cellStyleL = {width : 4 + '%', textAlign: "left", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
+    const cellStyleR = {width : 4 + '%', textAlign: "right", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
+    const cellStyleL = {width : 4 + '%', textAlign: "left", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
 
     const completedLapsCount = props.result.laps.filter((lap) => lap.state === "COMPLETED").length;
 
@@ -43,6 +43,7 @@ const ResultItem = (props) => {
         <tr>
             <td style={cellStyleR}>{props.result.id}</td>
             <td style={cellStyleL}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
+            <td style={cellStyleL}>{nbsp(props.result.club)}</td>
             <td style={cellStyleL}>{nbsp(props.result.team)}</td>
             <td style={cellStyleL}>{stateTranslator(props.result.participantState)}</td>
             <td style={cellStyleR}>{completedLapsCount}</td>
