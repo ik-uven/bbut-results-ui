@@ -179,11 +179,11 @@ class LapRegistrator extends Component {
 
         return (
             <div>
-{/*                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
+                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
                               onMessage={ (data) => this.setState({bbutResults: data}) } ref={ (client) => { this.clientRef = client }}
                               onConnect={ () => { this.setState({ clientConnected: true }) } }
                               onDisconnect={ () => { this.setState({ clientConnected: false }) } }
-                              debug={ true }/>*/}
+                              debug={ true }/>
 
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
