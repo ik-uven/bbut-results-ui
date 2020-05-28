@@ -30,7 +30,7 @@ class BbutQrReader extends Component {
             method: 'PUT',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                finishTime: "2020-08-08T12:53:00",
+                registrationTime: "2020-08-08T12:53:00",
                 lapState: lapState
             })
         })
