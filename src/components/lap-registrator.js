@@ -32,7 +32,7 @@ class LapRegistrator extends Component {
     registerLap(id, lapState) {
         fetch('/api/participants/' + id + '/laps', {
             method: 'PUT',
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json", "x-client-origin": "web"},
             body: JSON.stringify({
                 lapState: lapState
             })
@@ -125,29 +125,42 @@ class LapRegistrator extends Component {
                 let classValue = "";
 
                 if (result.laps.length > 0) {
-                    classValue = result.laps[result.laps.length-1].state === "COMPLETED" ? "table-success" : "table-warning";
+                    classValue = result.laps[result.laps.length - 1].state === "COMPLETED" ? "table-success" : "table-warning";
                 }
 
                 return (
                     <tr key={result.id}>
                         <td style={{width: 4 + '%', textAlign: "left"}}>{result.id}</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(result.firstName + " " + result.lastName)}</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{nbsp(stateTranslator(result.participantState))}</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td><td className={classValue}>&nbsp;</td>
+                        <td style={{
+                            width: 4 + '%',
+                            textAlign: "left"
+                        }}>{nbsp(result.firstName + " " + result.lastName)}</td>
+                        <td style={{
+                            width: 4 + '%',
+                            textAlign: "left"
+                        }}>{nbsp(stateTranslator(result.participantState))}</td>
+                        <td style={{
+                            width: 4 + '%',
+                            textAlign: "left"
+                        }}>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
+                        <td className={classValue}>&nbsp;</td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <div className="btn-group" role="group" aria-label="Basic example">
                                 <button value="registerCompletedLap"
                                         className="btn btn-light"
                                         disabled={result.participantState !== "ACTIVE"}
-                                        onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+</button>
+                                        onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+
+                                </button>
                                 <button value="registerOverdueLap"
                                         className="btn btn-light"
                                         disabled={result.participantState !== "ACTIVE"}
-                                        onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x</button>
+                                        onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x
+                                </button>
                                 <button value="deleteLap"
                                         className="btn btn-light"
                                         disabled={result.laps.length === 0 || result.participantState !== "ACTIVE"}
-                                        onClick={(e) => this.deleteLatestLap(result.id, this.getLatestLapId(result), e)}>-</button>
+                                        onClick={(e) => this.deleteLatestLap(result.id, this.getLatestLapId(result), e)}>-
+                                </button>
                             </div>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
@@ -178,16 +191,27 @@ class LapRegistrator extends Component {
 
         return (
             <div>
-                <SockJsClient url={ "/api/live" } topics={["/topics/results"]}
-                              onMessage={ (data) => this.setState({bbutResults: data}) } ref={ (client) => { this.clientRef = client }}
-                              onConnect={ () => { this.setState({ clientConnected: true }) } }
-                              onDisconnect={ () => { this.setState({ clientConnected: false }) } }
-                              debug={ true }/>
+                <SockJsClient url={"/api/live"} topics={["/topics/results"]}
+                              onMessage={(data) => this.setState({bbutResults: data})} ref={(client) => {
+                    this.clientRef = client
+                }}
+                              onConnect={() => {
+                                  this.setState({clientConnected: true})
+                              }}
+                              onDisconnect={() => {
+                                  this.setState({clientConnected: false})
+                              }}
+                              debug={true}/>
 
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>
-                        <td>#</td><td>Namn</td><td>Status</td><td colSpan={2}>Varv</td><td>Hantera varv</td><td colSpan={4}>Hantera status</td>
+                        <td>#</td>
+                        <td>Namn</td>
+                        <td>Status</td>
+                        <td colSpan={2}>Varv</td>
+                        <td>Hantera varv</td>
+                        <td colSpan={4}>Hantera status</td>
                     </tr>
                     {lapButtons}
                     </tbody>
@@ -198,7 +222,8 @@ class LapRegistrator extends Component {
 
     getLatestLapId(result) {
         //console.log(result.laps)
-        return Math.max.apply(Math, result.laps.map(lap => lap.number));;
+        return Math.max.apply(Math, result.laps.map(lap => lap.number));
+        ;
     }
 }
 
