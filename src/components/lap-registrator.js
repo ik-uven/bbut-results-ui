@@ -95,10 +95,10 @@ class LapRegistrator extends Component {
             return comparison;
         };
 
-        const stateTranslator = (state) => {
-            let translation = state;
+        const stateTranslator = (participantState) => {
+            let translation = participantState;
 
-            switch (state) {
+            switch (participantState) {
                 case "REGISTERED":
                     translation = "Anmäld";
                     break;
@@ -165,23 +165,25 @@ class LapRegistrator extends Component {
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="activate"
+                                    disabled={result.participantState === "ACTIVE"}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{nbsp("Aktivera")}</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="resign"
+                                    disabled={result.participantState === "RESIGNED"}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{nbsp("Avsluta")}</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="noShow"
-                                    disabled={result.laps.length > 0}
+                                    disabled={result.participantState === "NO_SHOW" || result.laps.length > 0}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registered"
-                                    disabled={result.laps.length > 0}
+                                    disabled={result.participantState === "REGISTERED" || result.laps.length > 0}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>{nbsp("Anmäld")}</button>
                         </td>
