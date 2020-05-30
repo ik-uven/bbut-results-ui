@@ -10,6 +10,8 @@ function App() {
         <div className="App">
             <Switch>
                 <Route path="/" component={ResultList} exact />
+                <Route path="/men" render={(props) => <ResultList {...props} filterOnGender={"MALE"} />}/>
+                <Route path="/women" render={(props) => <ResultList {...props} filterOnGender={"FEMALE"} />}/>
                 <Route path="/admin" component={LapRegistrator} />
                 <Route path="/reader" component={BbutQrReader} />
                 <Route component={Error} />

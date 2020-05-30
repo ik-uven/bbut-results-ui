@@ -9,6 +9,7 @@ class ResultList extends Component {
         super(props);
 
         this.state = {
+            filterOnGender: props.filterOnGender,
             clientConnected: false,
             bbutResults: []
         };
@@ -58,7 +59,9 @@ class ResultList extends Component {
             return content;
         };
 
-        const resultItems = this.state.bbutResults.map((result) => {
+        const resultItems = this.state.bbutResults
+            .filter(this.onGender())
+            .map((result) => {
             return (
                 <ResultItem key={result.id} result={result}/>
             )
@@ -82,6 +85,16 @@ class ResultList extends Component {
                 </table>
             </div>
         );
+    }
+
+    onGender() {
+        return (result) => {
+            if (this.state.filterOnGender !== undefined) {
+                return result.gender === this.state.filterOnGender;
+            } else {
+                return result.id > 0;
+            }
+        };
     }
 }
 

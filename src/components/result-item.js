@@ -1,15 +1,15 @@
 import React from 'react';
 
 const ResultItem = (props) => {
-
+console.log(props);
     const nbsp = (string) => {
         return string !== null ? string.replace(/ /g, "\u00a0") : string;
     };
 
-    const stateTranslator = (state) => {
-        let translation = state;
+    const stateTranslator = (participantState) => {
+        let translation = participantState;
 
-        switch (state) {
+        switch (participantState) {
             case "REGISTERED":
                 translation = "Anmäld";
                 break;
