@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import ResultItem from "./result-item";
 import SockJsClient from "react-stomp";
-// import getResultListMock from "./result-list-mock"
 
 class ResultList extends Component {
 
@@ -9,7 +8,7 @@ class ResultList extends Component {
         super(props);
 
         this.state = {
-            filterOnGender: props.filterOnGender,
+            type: props.match.params.id,
             clientConnected: false,
             bbutResults: []
         };
@@ -30,11 +29,8 @@ class ResultList extends Component {
             })
             .then(data => {
                 this.setState({bbutResults: data})
-                console.log(data);
             })
             .catch(console.log)
-
-        // this.setState({bbutResults: getResultListMock()})
     }
 
     getMaxLap() {
@@ -89,8 +85,9 @@ class ResultList extends Component {
 
     onGender() {
         return (result) => {
-            if (this.state.filterOnGender !== undefined) {
-                return result.gender === this.state.filterOnGender;
+            if (this.state.type === "men" || this.state.type === "women") {
+                const filterValue = this.state.type === "women" ? "FEMALE" : "MALE";
+                return result.gender === filterValue;
             } else {
                 return result.id > 0;
             }

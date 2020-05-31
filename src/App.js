@@ -2,22 +2,26 @@ import React from 'react';
 import './App.css';
 import ResultList from "./components/result-list";
 import LapRegistrator from "./components/lap-registrator";
-import {Route, Switch} from 'react-router-dom';
 import BbutQrReader from "./components/bbut-qr-reader";
+import ResultListTeam from "./components/result-list-team";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 
 function App() {
     return (
-        <div className="App">
-            <Switch>
-                <Route path="/" component={ResultList} exact />
-                <Route path="/men" render={(props) => <ResultList {...props} filterOnGender={"MALE"} />}/>
-                <Route path="/women" render={(props) => <ResultList {...props} filterOnGender={"FEMALE"} />}/>
-                <Route path="/admin" component={LapRegistrator} />
-                <Route path="/reader" component={BbutQrReader} />
-                <Route component={Error} />
-            </Switch>
-        </div>
-
+        <BrowserRouter>
+            <div className="App">
+                <Switch>
+                    <Route exact path="/">
+                        <Redirect to="/results"/>
+                    </Route>
+                    <Route path="/results/teams" exact component={ResultListTeam}/>
+                    <Route exact path={["/results", "/results/:id"]} component={ResultList}/>
+                    <Route path="/admin" component={LapRegistrator}/>
+                    <Route path="/reader" component={BbutQrReader}/>
+                    <Route component={Error}/>
+                </Switch>
+            </div>
+        </BrowserRouter>
     );
 }
 

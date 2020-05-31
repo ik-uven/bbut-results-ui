@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultItem = (props) => {
+const ResultItemTeam = (props) => {
 
     const nbsp = (string) => {
         return string !== null ? string.replace(/ /g, "\u00a0") : string;
@@ -29,27 +29,26 @@ const ResultItem = (props) => {
         return translation;
     };
 
-    const cellStyleR = {width : 4 + '%', textAlign: "right", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
-    const cellStyleL = {width : 4 + '%', textAlign: "left", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
+    const cellStyleR = {width : 4 + '%', textAlign: "right", whiteSpace: "nowrap", fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
+    const cellStyleL = {width : 4 + '%', textAlign: "left", whiteSpace: "nowrap", fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
 
-    const completedLapsCount = props.result.laps.filter((lap) => lap.state === "COMPLETED").length;
+    const completedLapsCount = props.participant.laps.filter((lap) => lap.state === "COMPLETED").length;
 
-    const laps = props.result.laps.map((lap) => {
+    const laps = props.participant.laps.map((lap) => {
         const classValue = lap.state === "COMPLETED" ? "table-success" : "table-warning";
         return <td key={lap.number} className={classValue}>{" "}</td>
     });
 
     return (
         <tr>
-            <td style={cellStyleR}>{props.result.id}</td>
-            <td style={cellStyleL}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
-            <td style={cellStyleL}>{nbsp(props.result.club)}</td>
-            <td style={cellStyleL}>{nbsp(props.result.team)}</td>
-            <td style={cellStyleL}>{stateTranslator(props.result.participantState)}</td>
+            <td style={cellStyleL}>{nbsp(props.participant.team)}</td>
+            <td style={cellStyleR}>{props.participant.id}</td>
+            <td style={cellStyleL}>{nbsp(props.participant.firstName + " " + props.participant.lastName)}</td>
+            <td style={cellStyleL}>{stateTranslator(props.participant.participantState)}</td>
             <td style={cellStyleR}>{completedLapsCount}</td>
             {laps}
         </tr>
     );
 };
 
-export default ResultItem;
+export default ResultItemTeam;

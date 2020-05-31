@@ -24,7 +24,6 @@ class LapRegistrator extends Component {
             })
             .then(data => {
                 this.setState({bbutResults: data})
-                //console.log(data);
             })
             .catch(console.log);
     }
@@ -45,7 +44,6 @@ class LapRegistrator extends Component {
     };
 
     deleteLatestLap(id, lapId) {
-        //console.log('/api/participants/' + id + '/laps/' + lapId)
         fetch('/api/participants/' + id + '/laps/' + lapId, {
             method: 'DELETE'
         })
@@ -121,7 +119,6 @@ class LapRegistrator extends Component {
         const lapButtons = this.state.bbutResults
             .sort(compareOnStartNumber)
             .map((result) => {
-                console.log(result);
                 let classValue = "";
 
                 if (result.laps.length > 0) {
@@ -223,9 +220,7 @@ class LapRegistrator extends Component {
     }
 
     getLatestLapId(result) {
-        //console.log(result.laps)
         return Math.max.apply(Math, result.laps.map(lap => lap.number));
-        ;
     }
 }
 
