@@ -154,7 +154,7 @@ class LapRegistrator extends Component {
                                 </button>
                                 <button value="registerOverdueLap"
                                         className="btn btn-light"
-                                        disabled={result.participantState !== "ACTIVE"}
+                                        disabled={result.participantState !== "ACTIVE" || hasRegisteredLaps && lastLapOverdue}
                                         onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x
                                 </button>
                                 <button value="deleteLap"
