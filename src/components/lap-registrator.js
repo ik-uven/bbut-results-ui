@@ -121,8 +121,12 @@ class LapRegistrator extends Component {
             .map((result) => {
                 let classValue = "";
 
-                if (result.laps.length > 0) {
-                    classValue = result.laps[result.laps.length - 1].state === "COMPLETED" ? "table-success" : "table-warning";
+                const hasRegisteredLaps = result.laps.length > 0;
+                const lastLapCompleted = hasRegisteredLaps && result.laps[result.laps.length - 1].state === "COMPLETED";
+                const lastLapOverdue = hasRegisteredLaps && result.laps[result.laps.length - 1].state === "OVERDUE";
+
+                if (hasRegisteredLaps) {
+                    classValue = lastLapCompleted ? "table-success" : "table-warning";
                 }
 
                 return (
@@ -145,7 +149,7 @@ class LapRegistrator extends Component {
                             <div className="btn-group" role="group" aria-label="Basic example">
                                 <button value="registerCompletedLap"
                                         className="btn btn-light"
-                                        disabled={result.participantState !== "ACTIVE"}
+                                        disabled={result.participantState !== "ACTIVE" || hasRegisteredLaps && lastLapOverdue}
                                         onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+
                                 </button>
                                 <button value="registerOverdueLap"
@@ -174,13 +178,13 @@ class LapRegistrator extends Component {
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="noShow"
-                                    disabled={result.participantState === "NO_SHOW" || result.laps.length > 0}
+                                    disabled={result.participantState === "NO_SHOW" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
                         </td>
                         <td style={{width: 4 + '%', textAlign: "left"}}>
                             <button value="registered"
-                                    disabled={result.participantState === "REGISTERED" || result.laps.length > 0}
+                                    disabled={result.participantState === "REGISTERED" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>{nbsp("Anmäld")}</button>
                         </td>
