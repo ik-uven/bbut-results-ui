@@ -50,7 +50,20 @@ class ResultList extends Component {
                 <td key="-2">Lagnamn</td>, <td key="-1">Status</td>, <td key="0">Varv</td>];
 
             for (let i = 0; i < lapsToDraw; i++) {
-                content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)
+                const lapNumber = i + 1;
+
+                let lapNumberString;
+
+                // Add some space before numbers below 10 and for number 11
+                if (lapNumber < 10) {
+                    lapNumberString = "\u00a0\u00a0" + lapNumber
+                } else if (lapNumber === 11) {
+                    lapNumberString = "\u00a0" + lapNumber;
+                } else {
+                    lapNumberString = lapNumber;
+                }
+
+                content.push(<td key={lapNumber} style={{width: 25 + 'px'}}>{lapNumberString}</td>);
             }
 
             return content;
