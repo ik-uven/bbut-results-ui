@@ -14,7 +14,7 @@ class ResultList extends Component {
         };
 
         this.loadResultList = this.loadResultList.bind(this);
-        this.getMaxLap = this.getMaxLap.bind(this);
+        this.getHighestLapCount = this.getHighestLapCount.bind(this);
     }
 
     componentDidMount() {
@@ -33,18 +33,18 @@ class ResultList extends Component {
             .catch(console.log)
     }
 
-    getMaxLap() {
-        const finalMax = 26;
+    getHighestLapCount() {
+        const defaultMaxCount = 26;
         const currentMax = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
 
-        return currentMax > finalMax ? currentMax : finalMax;
+        return currentMax > defaultMaxCount ? currentMax : defaultMaxCount;
     }
 
     render() {
 
         const lapNumbers = () => {
 
-            const lapsToDraw = this.getMaxLap();
+            const lapsToDraw = this.getHighestLapCount();
 
             const content = [<td key="-5">#</td>, <td key="-4">Namn</td>, <td key="-3">Klubb</td>,
                 <td key="-2">Lagnamn</td>, <td key="-1">Status</td>, <td key="0">Varv</td>];
@@ -74,7 +74,7 @@ class ResultList extends Component {
             .filter(this.onGender())
             .map((result) => {
                 return (
-                    <ResultItem key={result.id} result={result}/>
+                    <ResultItem key={result.id} result={result} highestLapCount={this.getHighestLapCount()}/>
                 )
             });
 

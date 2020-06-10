@@ -39,6 +39,20 @@ const ResultItem = (props) => {
         return <td key={lap.number} className={classValue}>{" "}</td>
     });
 
+    const getNumberOfSlotsToPad = () => {
+        return props.highestLapCount - props.result.laps.length;
+    };
+
+    const padEmptySlots = () => {
+        const content = [];
+
+        for (let i = 0; i < getNumberOfSlotsToPad(); i++) {
+            content.push(<td>{" "}</td>)
+        }
+
+        return content;
+    };
+
     return (
         <tr>
             <td style={cellStyleR}>{props.result.id}</td>
@@ -47,7 +61,7 @@ const ResultItem = (props) => {
             <td style={cellStyleL}>{nbsp(props.result.team)}</td>
             <td style={cellStyleL}>{stateTranslator(props.result.participantState)}</td>
             <td style={cellStyleR}>{completedLapsCount}</td>
-            {laps}
+            {laps}{padEmptySlots()}
         </tr>
     );
 };
