@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.lap-completed {
+  background-color: #C3E6CB;
+  color: #282c34;
+}
+
+.lap-overdue {
+  background-color: #FFEEBA;
+  color: #282c34;
+}

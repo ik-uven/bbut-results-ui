@@ -35,8 +35,18 @@ const ResultItem = (props) => {
     const completedLapsCount = props.result.laps.filter((lap) => lap.state === "COMPLETED").length;
 
     const laps = props.result.laps.map((lap) => {
-        const classValue = lap.state === "COMPLETED" ? "table-success" : "table-warning";
-        return <td key={lap.number} className={classValue}>{" "}</td>
+        const lapCount = props.result.laps.length;
+        const classValue = lap.state === "COMPLETED" ? "lap-completed" : "lap-overdue";
+        let cellContent;
+
+        if (lap.number === lapCount && props.result.participantState === "RESIGNED") {
+            //cellContent = "\u2736";
+            //cellContent = "👣";
+            //cellContent = "🏁";
+            cellContent = "⚑";
+        }
+
+        return <td key={lap.number} className={classValue}>{cellContent}</td>;
     });
 
     const getNumberOfSlotsToPad = () => {

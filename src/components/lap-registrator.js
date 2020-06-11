@@ -126,7 +126,7 @@ class LapRegistrator extends Component {
                 const lastLapOverdue = hasRegisteredLaps && result.laps[result.laps.length - 1].state === "OVERDUE";
 
                 if (hasRegisteredLaps) {
-                    classValue = lastLapCompleted ? "table-success" : "table-warning";
+                    classValue = lastLapCompleted ? "lap-completed" : "lap-overdue";
                 }
 
                 return (
@@ -149,12 +149,12 @@ class LapRegistrator extends Component {
                             <div className="btn-group" role="group" aria-label="Basic example">
                                 <button value="registerCompletedLap"
                                         className="btn btn-light"
-                                        disabled={result.participantState !== "ACTIVE" || hasRegisteredLaps && lastLapOverdue}
+                                        disabled={result.participantState !== "ACTIVE" || (hasRegisteredLaps && lastLapOverdue)}
                                         onClick={(e) => this.registerLap(result.id, "COMPLETED")}>+
                                 </button>
                                 <button value="registerOverdueLap"
                                         className="btn btn-light"
-                                        disabled={result.participantState !== "ACTIVE" || hasRegisteredLaps && lastLapOverdue}
+                                        disabled={result.participantState !== "ACTIVE" || (hasRegisteredLaps && lastLapOverdue)}
                                         onClick={(e) => this.registerLap(result.id, "OVERDUE")}>x
                                 </button>
                                 <button value="deleteLap"
