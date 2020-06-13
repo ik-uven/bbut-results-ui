@@ -57,7 +57,7 @@ const ResultItem = (props) => {
         const content = [];
 
         for (let i = 0; i < getNumberOfSlotsToPad(); i++) {
-            content.push(<td>{" "}</td>)
+            content.push(<td key={i}>{" "}</td>)
         }
 
         return content;

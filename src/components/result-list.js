@@ -10,15 +10,22 @@ class ResultList extends Component {
         this.state = {
             type: props.match.params.id,
             clientConnected: false,
-            bbutResults: []
+            bbutResults: [],
+            settings: {
+                resultView: {
+                  numberOfColumns: 26
+                }
+            }
         };
 
         this.loadResultList = this.loadResultList.bind(this);
+        this.loadSettings = this.loadSettings.bind(this);
         this.getHighestLapCount = this.getHighestLapCount.bind(this);
     }
 
     componentDidMount() {
         this.loadResultList();
+        this.loadSettings();
     }
 
     loadResultList() {
@@ -33,8 +40,20 @@ class ResultList extends Component {
             .catch(console.log)
     }
 
+    loadSettings() {
+        fetch('/api/settings')
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                this.setState({settings: data})
+            })
+            .catch(console.log)
+    }
+
     getHighestLapCount() {
-        const defaultMaxCount = 26;
+        //console.log(this.state.settings.resultView.numberOfColumns)
+        const defaultMaxCount = this.state.settings.resultView.numberOfColumns;
         const currentMax = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
 
         return currentMax > defaultMaxCount ? currentMax : defaultMaxCount;
