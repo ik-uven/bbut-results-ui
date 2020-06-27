@@ -13,7 +13,8 @@ class ResultList extends Component {
             bbutResults: [],
             settings: {
                 resultView: {
-                  numberOfColumns: 26
+                    numberOfColumns: 26,
+                    showTeamsColumn: true
                 }
             }
         };
@@ -65,8 +66,15 @@ class ResultList extends Component {
 
             const lapsToDraw = this.getHighestLapCount();
 
-            const content = [<td key="-5">#</td>, <td key="-4">Namn</td>, <td key="-3">Klubb</td>,
-                <td key="-2">Lagnamn</td>, <td key="-1">Status</td>, <td key="0">Varv</td>];
+            const content = [];
+            content.push(<td key="-5">#</td>);
+            content.push(<td key="-4">Namn</td>);
+            content.push(<td key="-3">Klubb</td>);
+            if (this.state.settings.resultView.showTeamsColumn) {
+                content.push(<td key="-2">Lagnamn</td>);
+            }
+            content.push(<td key="-1">Status</td>);
+            content.push(<td key="0">Varv</td>);
 
             for (let i = 0; i < lapsToDraw; i++) {
                 const lapNumber = i + 1;
@@ -93,7 +101,10 @@ class ResultList extends Component {
             .filter(this.onGender())
             .map((result) => {
                 return (
-                    <ResultItem key={result.id} result={result} highestLapCount={this.getHighestLapCount()}/>
+                    <ResultItem key={result.id}
+                                result={result}
+                                highestLapCount={this.getHighestLapCount()}
+                                showTeamsColumn={this.state.settings.resultView.showTeamsColumn}/>
                 )
             });
 

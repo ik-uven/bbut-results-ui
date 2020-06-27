@@ -63,12 +63,16 @@ const ResultItem = (props) => {
         return content;
     };
 
+    const teamsColumn = () => {
+        return props.showTeamsColumn ? <td style={cellStyleL}>{nbsp(props.result.team)}</td> : null;
+    };
+
     return (
         <tr>
             <td style={cellStyleR}>{props.result.id}</td>
             <td style={cellStyleL}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
             <td style={cellStyleL}>{nbsp(props.result.club)}</td>
-            <td style={cellStyleL}>{nbsp(props.result.team)}</td>
+            {teamsColumn()}
             <td style={cellStyleL}>{stateTranslator(props.result.participantState)}</td>
             <td style={cellStyleR}>{completedLapsCount}</td>
             {laps}{padEmptySlots()}
