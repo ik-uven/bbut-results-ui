@@ -5,6 +5,7 @@ import LapRegistrator from "./components/lap-registrator";
 import BbutQrReader from "./components/bbut-qr-reader";
 import ResultListTeam from "./components/result-list-team";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import ParticipantAdminList from "./components/admin/participant-admin-list";
 
 function App() {
     return (
@@ -16,7 +17,8 @@ function App() {
                     </Route>
                     <Route path="/results/teams" exact component={ResultListTeam}/>
                     <Route exact path={["/results", "/results/:id"]} component={ResultList}/>
-                    <Route path="/admin" component={LapRegistrator}/>
+                    <Route path="/registrator" component={LapRegistrator}/>
+                    <Route path="/admin" component={ParticipantAdminList}/>
                     <Route path="/reader" component={BbutQrReader}/>
                     <Route component={Error}/>
                 </Switch>

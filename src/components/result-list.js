@@ -53,7 +53,6 @@ class ResultList extends Component {
     }
 
     getHighestLapCount() {
-        //console.log(this.state.settings.resultView.numberOfColumns)
         const defaultMaxCount = this.state.settings.resultView.numberOfColumns;
         const currentMax = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
 
