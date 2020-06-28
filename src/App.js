@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import ResultList from "./components/result-list";
-import LapRegistrator from "./components/lap-registrator";
+import ResultList from "./components/result/result-list";
+import LapRegistrator from "./components/registrator/lap-registrator";
 import BbutQrReader from "./components/bbut-qr-reader";
-import ResultListTeam from "./components/result-list-team";
+import ResultListTeam from "./components/result/result-list-team";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import ParticipantAdminList from "./components/admin/participant-admin-list";
 
