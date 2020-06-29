@@ -11,9 +11,9 @@ const EditParticipantRow = (props) => {
 
     return (
         <form onSubmit={(event) => {
-            console.log(event);
             event.preventDefault()
             props.updateUser(user);
+            props.setEditing(false);
         }}
         >
             <div className="form-row table-dark border-top border-secondary text-left" key={user.id}>
@@ -91,9 +91,8 @@ const EditParticipantRow = (props) => {
                     &nbsp;
                     <button className="btn btn-primary btn-sm" onClick={() => {
                         props.setEditing(false);
-
                     }}
-                    >Återgå
+                    >Avbryt
                     </button>
                 </div>
             </div>
