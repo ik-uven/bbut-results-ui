@@ -11,7 +11,11 @@ class ParticipantAdminList extends Component {
         this.state = {
             participants: [],
             editing: false,
-            currentUser: defaultCurrentUser
+            currentUser: defaultCurrentUser,
+            deleteConfirmation: {
+                show: false,
+                id: null
+            }
         };
 
         this.loadParticipantList = this.loadParticipantList.bind(this);
@@ -49,8 +53,21 @@ class ParticipantAdminList extends Component {
             .catch(console.log);
     }
 
+    showDeleteConfirmation(show, id) {
+        this.setState({deleteConfirmation: {show: show, id: id}})
+    }
+
     deleteParticipant(id) {
-        console.log("Deleting " + id);
+        fetch('/api/admin/participants/' + id, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    let copy = this.state.participants.filter(participant => participant.id !== id);
+                    this.setState({participants: copy})
+                }
+            })
+            .catch(console.log);
     }
 
     refresh(id, data) {
@@ -67,6 +84,33 @@ class ParticipantAdminList extends Component {
     }
 
     render() {
+
+        const nbsp = (string) => {
+            return string !== null ? string.replace(/ /g, "\u00a0") : string;
+        };
+
+        const stateTranslator = (participantState) => {
+            let translation = participantState;
+
+            switch (participantState) {
+                case "REGISTERED":
+                    translation = "Anmäld";
+                    break;
+                case "ACTIVE":
+                    translation = "Aktiv";
+                    break;
+                case "RESIGNED":
+                    translation = "Avslutat";
+                    break;
+                case "NO_SHOW":
+                    translation = nbsp("Ej start");
+                    break;
+                default:
+                    break;
+            }
+
+            return translation;
+        };
 
         const updateUser = (updatedParticipant) => {
             this.setState({editing: false});
@@ -93,13 +137,42 @@ class ParticipantAdminList extends Component {
                     lastName: participant.lastName,
                     club: participant.club,
                     team: participant.team,
-                    gender: participant.gender
+                    gender: participant.gender,
+                    participantState: stateTranslator(participant.participantState)
                 }
             })
         };
 
         const deleteRow = (id) => {
             this.deleteParticipant(id);
+            this.showDeleteConfirmation(false);
+        };
+
+        const actionButtons = (participant) => {
+            if (this.state.deleteConfirmation.show && this.state.deleteConfirmation.id === participant.id) {
+                return (
+                    <div className="col border-right border-secondary">
+                        <div>Ta bort<br/>{participant.firstName + " " + participant.lastName}?</div>
+                        <button className="btn btn-danger btn-sm" onClick={() => deleteRow(participant.id)}>Ta bort
+                        </button>
+                        &nbsp;
+                        <button className="btn btn-primary btn-sm" onClick={() => this.showDeleteConfirmation(false)}>Avbryt</button>
+                    </div>
+                );
+
+            } else {
+                return (
+                    <div className="col border-right border-secondary">
+                        <button className="btn btn-primary btn-sm" onClick={() => editRow(participant)}>Ändra
+                        </button>
+                        &nbsp;
+                        <button
+                            className="btn btn-primary btn-sm"
+                            disabled={participant.participantState !== "REGISTERED"}
+                            onClick={() => this.showDeleteConfirmation(true, participant.id)}>Ta bort</button>
+                    </div>
+                );
+            }
         };
 
         return (
@@ -111,6 +184,7 @@ class ParticipantAdminList extends Component {
                     <div className="col border-right border-secondary">Klubb</div>
                     <div className="col border-right border-secondary">Lagnamn</div>
                     <div className="col border-right border-secondary">Kön</div>
+                    <div className="col border-right border-secondary">Status</div>
                     <div className="col border-right border-secondary">
                         <button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button>
                     </div>
@@ -139,14 +213,9 @@ class ParticipantAdminList extends Component {
                             <div className="col border-right border-secondary">{participant.lastName}</div>
                             <div className="col border-right border-secondary">{participant.club}</div>
                             <div className="col border-right border-secondary">{participant.team}</div>
-                            <div
-                                className="col border-right border-secondary">{participant.gender === "FEMALE" ? "Kvinna" : "Man"}</div>
-                            <div className="col border-right border-secondary">
-                                <button className="btn btn-primary btn-sm" onClick={() => editRow(participant)}>Ändra
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-primary btn-sm" onClick={() => deleteRow(participant.id)}>Ta bort</button>
-                            </div>
+                            <div className="col border-right border-secondary">{participant.gender === "FEMALE" ? "Kvinna" : "Man"}</div>
+                            <div className="col border-right border-secondary">{stateTranslator(participant.participantState)}</div>
+                            {actionButtons(participant)}
                         </div>
                     ))
                 ) : (

@@ -44,6 +44,7 @@ const EditParticipantRow = (props) => {
                         name="club"
                         value={user.club}
                         onChange={handleInputChange}
+                        className="form-control form-control-sm"
                     />
                 </div>
                 <div className="col border-right border-secondary">
@@ -52,6 +53,7 @@ const EditParticipantRow = (props) => {
                         name="team"
                         value={user.team}
                         onChange={handleInputChange}
+                        className="form-control form-control-sm"
                     />
                 </div>
                 <div className="col border-right border-secondary">
@@ -81,11 +83,8 @@ const EditParticipantRow = (props) => {
                             Man
                         </label>
                     </div>
-                    {/*<select name="gender" value={user.gender} onChange={handleInputChange}>*/}
-                    {/*    <option value="FEMALE">Kvinna</option>*/}
-                    {/*    <option value="MALE">Man</option>*/}
-                    {/*</select>*/}
                 </div>
+                <div className="col border-right border-secondary">{user.participantState}</div>
                 <div className="col border-right border-secondary">
                     <button className="btn btn-primary btn-sm">Spara</button>
                     &nbsp;
