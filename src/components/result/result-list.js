@@ -66,14 +66,14 @@ class ResultList extends Component {
             const lapsToDraw = this.getHighestLapCount();
 
             const content = [];
-            content.push(<td key="-5">#</td>);
-            content.push(<td key="-4">Namn</td>);
-            content.push(<td key="-3">Klubb</td>);
+            content.push(<td className="center" key="-5">#</td>);
+            content.push(<td className="center" key="-4">Namn</td>);
+            content.push(<td className="center" key="-3">Klubb</td>);
             if (this.state.settings.resultView.showTeamsColumn) {
-                content.push(<td key="-2">Lagnamn</td>);
+                content.push(<td className="center" key="-2">Lagnamn</td>);
             }
-            content.push(<td key="-1">Status</td>);
-            content.push(<td key="0">Varv</td>);
+            content.push(<td className="center" key="-1">Status</td>);
+            content.push(<td className="center" key="0">Varv</td>);
 
             for (let i = 0; i < lapsToDraw; i++) {
                 const lapNumber = i + 1;

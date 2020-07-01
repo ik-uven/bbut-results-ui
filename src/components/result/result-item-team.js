@@ -29,8 +29,7 @@ const ResultItemTeam = (props) => {
         return translation;
     };
 
-    const cellStyleR = {width : 4 + '%', textAlign: "right", whiteSpace: "nowrap", fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
-    const cellStyleL = {width : 4 + '%', textAlign: "left", whiteSpace: "nowrap", fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
+    const stateStyle = {fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
 
     const completedLapsCount = props.participant.laps.filter((lap) => lap.state === "COMPLETED").length;
 
@@ -41,11 +40,11 @@ const ResultItemTeam = (props) => {
 
     return (
         <tr>
-            <td style={cellStyleL}>{nbsp(props.participant.team)}</td>
-            <td style={cellStyleR}>{props.participant.id}</td>
-            <td style={cellStyleL}>{nbsp(props.participant.firstName + " " + props.participant.lastName)}</td>
-            <td style={cellStyleL}>{stateTranslator(props.participant.participantState)}</td>
-            <td style={cellStyleR}>{completedLapsCount}</td>
+            <td style={stateStyle}>{nbsp(props.participant.team)}</td>
+            <td className="right">{props.participant.id}</td>
+            <td style={stateStyle}>{nbsp(props.participant.firstName + " " + props.participant.lastName)}</td>
+            <td style={stateStyle}>{stateTranslator(props.participant.participantState)}</td>
+            <td className="right">{completedLapsCount}</td>
             {laps}
         </tr>
     );

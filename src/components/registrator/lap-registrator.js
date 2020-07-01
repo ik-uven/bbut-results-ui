@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SockJsClient from "react-stomp";
+import "../compontents.css"
 
 class LapRegistrator extends Component {
 
@@ -131,21 +132,12 @@ class LapRegistrator extends Component {
 
                 return (
                     <tr key={result.id}>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>{result.id}</td>
-                        <td style={{
-                            width: 4 + '%',
-                            textAlign: "left"
-                        }}>{nbsp(result.firstName + " " + result.lastName)}</td>
-                        <td style={{
-                            width: 4 + '%',
-                            textAlign: "left"
-                        }}>{nbsp(stateTranslator(result.participantState))}</td>
-                        <td style={{
-                            width: 4 + '%',
-                            textAlign: "left"
-                        }}>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
+                        <td>{result.id}</td>
+                        <td>{nbsp(result.firstName + " " + result.lastName)}</td>
+                        <td>{nbsp(stateTranslator(result.participantState))}</td>
+                        <td>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
                         <td className={classValue}>&nbsp;</td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                        <td>
                             <div className="btn-group" role="group" aria-label="Basic example">
                                 <button value="registerCompletedLap"
                                         className="btn btn-light"
@@ -164,25 +156,25 @@ class LapRegistrator extends Component {
                                 </button>
                             </div>
                         </td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                        <td>
                             <button value="activate"
                                     disabled={result.participantState === "ACTIVE"}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{nbsp("Aktivera")}</button>
                         </td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                        <td>
                             <button value="resign"
                                     disabled={result.participantState === "RESIGNED"}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{nbsp("Avsluta")}</button>
                         </td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                        <td>
                             <button value="noShow"
                                     disabled={result.participantState === "NO_SHOW" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
                                     onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
                         </td>
-                        <td style={{width: 4 + '%', textAlign: "left"}}>
+                        <td>
                             <button value="registered"
                                     disabled={result.participantState === "REGISTERED" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
@@ -209,12 +201,12 @@ class LapRegistrator extends Component {
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>
-                        <td>#</td>
-                        <td>Namn</td>
-                        <td>Status</td>
-                        <td colSpan={2}>Varv</td>
-                        <td>Hantera varv</td>
-                        <td colSpan={4}>Hantera status</td>
+                        <td className="center">#</td>
+                        <td className="center">Namn</td>
+                        <td className="center">Status</td>
+                        <td className="center" colSpan={2}>Varv</td>
+                        <td className="center">Hantera varv</td>
+                        <td className="center" colSpan={4}>Hantera status</td>
                     </tr>
                     {lapButtons}
                     </tbody>

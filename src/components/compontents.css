@@ -1,0 +1,13 @@
+
+td {
+    width: 4%;
+    text-align: left;
+}
+
+td.right {
+    text-align: right;
+}
+
+td.center {
+    text-align: center;
+}

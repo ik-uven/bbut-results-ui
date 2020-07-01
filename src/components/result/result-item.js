@@ -1,4 +1,5 @@
 import React from 'react';
+import "../compontents.css"
 
 const ResultItem = (props) => {
 
@@ -29,8 +30,7 @@ const ResultItem = (props) => {
         return translation;
     };
 
-    const cellStyleR = {width : 4 + '%', textAlign: "right", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
-    const cellStyleL = {width : 4 + '%', textAlign: "left", whiteSpace: "nowrap", fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
+    const stateStyle = {fontStyle: props.result.participantState !== "ACTIVE" ? "italic" : ""};
 
     const completedLapsCount = props.result.laps.filter((lap) => lap.state === "COMPLETED").length;
 
@@ -64,17 +64,17 @@ const ResultItem = (props) => {
     };
 
     const teamsColumn = () => {
-        return props.showTeamsColumn ? <td style={cellStyleL}>{nbsp(props.result.team)}</td> : null;
+        return props.showTeamsColumn ? <td style={stateStyle}>{nbsp(props.result.team)}</td> : null;
     };
 
     return (
         <tr>
-            <td style={cellStyleR}>{props.result.id}</td>
-            <td style={cellStyleL}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
-            <td style={cellStyleL}>{nbsp(props.result.club)}</td>
+            <td className="right">{props.result.id}</td>
+            <td style={stateStyle}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
+            <td style={stateStyle}>{nbsp(props.result.club)}</td>
             {teamsColumn()}
-            <td style={cellStyleL}>{stateTranslator(props.result.participantState)}</td>
-            <td style={cellStyleR}>{completedLapsCount}</td>
+            <td style={stateStyle}>{stateTranslator(props.result.participantState)}</td>
+            <td className="right">{completedLapsCount}</td>
             {laps}{padEmptySlots()}
         </tr>
     );

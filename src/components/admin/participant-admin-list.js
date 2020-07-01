@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import EditParticipantRow from "./edit-participant-row";
+import "../compontents.css"
 
 const defaultCurrentUser = {id: null, firstName: "", lastName: "", club: "", team: "", gender: "MALE"};
 
@@ -151,18 +152,18 @@ class ParticipantAdminList extends Component {
         const actionButtons = (participant) => {
             if (this.state.deleteConfirmation.show && this.state.deleteConfirmation.id === participant.id) {
                 return (
-                    <div className="col border-right border-secondary">
+                    <td>
                         <div>Ta bort<br/>{participant.firstName + " " + participant.lastName}?</div>
                         <button className="btn btn-danger btn-sm" onClick={() => deleteRow(participant.id)}>Ta bort
                         </button>
                         &nbsp;
                         <button className="btn btn-primary btn-sm" onClick={() => this.showDeleteConfirmation(false)}>Avbryt</button>
-                    </div>
+                    </td>
                 );
 
             } else {
                 return (
-                    <div className="col border-right border-secondary">
+                    <td>
                         <button className="btn btn-primary btn-sm" onClick={() => editRow(participant)}>Ändra
                         </button>
                         &nbsp;
@@ -170,25 +171,24 @@ class ParticipantAdminList extends Component {
                             className="btn btn-primary btn-sm"
                             disabled={participant.participantState !== "REGISTERED"}
                             onClick={() => this.showDeleteConfirmation(true, participant.id)}>Ta bort</button>
-                    </div>
+                    </td>
                 );
             }
         };
 
         return (
-            <div>
-                <div className="row table-dark border-top border-secondary text-left">
-                    <div className="col border-right border-secondary">#</div>
-                    <div className="col border-right border-secondary">Förnamn</div>
-                    <div className="col border-right border-secondary">Efternamn</div>
-                    <div className="col border-right border-secondary">Klubb</div>
-                    <div className="col border-right border-secondary">Lagnamn</div>
-                    <div className="col border-right border-secondary">Kön</div>
-                    <div className="col border-right border-secondary">Status</div>
-                    <div className="col border-right border-secondary">
-                        <button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button>
-                    </div>
-                </div>
+            <table className="table table-dark table-bordered table-sm">
+                <tbody>
+                <tr>
+                    <td className="center">#</td>
+                    <td className="center">Förnamn</td>
+                    <td className="center">Efternamn</td>
+                    <td className="center">Klubb</td>
+                    <td className="center">Lagnamn</td>
+                    <td className="center">Kön</td>
+                    <td className="center">Status</td>
+                    <td><button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button></td>
+                </tr>
 
                 {this.state.participants.length > 0 ? (
                     this.state.editing === true && this.state.currentUser.id === null ? (
@@ -207,16 +207,16 @@ class ParticipantAdminList extends Component {
                             updateUser={updateUser}
                             setEditing={setEditing}
                         /> :
-                        <div className="row table-dark border-top border-secondary text-left" key={participant.id}>
-                            <div className="col border-right border-secondary">{participant.id}</div>
-                            <div className="col border-right border-secondary">{participant.firstName}</div>
-                            <div className="col border-right border-secondary">{participant.lastName}</div>
-                            <div className="col border-right border-secondary">{participant.club}</div>
-                            <div className="col border-right border-secondary">{participant.team}</div>
-                            <div className="col border-right border-secondary">{participant.gender === "FEMALE" ? "Kvinna" : "Man"}</div>
-                            <div className="col border-right border-secondary">{stateTranslator(participant.participantState)}</div>
+                        <tr key={participant.id}>
+                            <td>{participant.id}</td>
+                            <td>{participant.firstName}</td>
+                            <td>{participant.lastName}</td>
+                            <td>{participant.club}</td>
+                            <td>{participant.team}</td>
+                            <td>{participant.gender === "FEMALE" ? "Kvinna" : "Man"}</td>
+                            <td>{stateTranslator(participant.participantState)}</td>
                             {actionButtons(participant)}
-                        </div>
+                        </tr>
                     ))
                 ) : (
                     <div>
@@ -224,7 +224,8 @@ class ParticipantAdminList extends Component {
                     </div>
                 )}
 
-            </div>
+                </tbody>
+            </table>
         );
     }
 }
