@@ -10,7 +10,7 @@ class LapRegistrator extends Component {
 
         this.state = {
             clientConnected: false,
-            bbutResults: []
+            results: []
         };
 
         this.reloadResultList = this.reloadResultList.bind(this);
@@ -25,7 +25,7 @@ class LapRegistrator extends Component {
                 return response.json()
             })
             .then(data => {
-                this.setState({bbutResults: data})
+                this.setState({results: data})
             })
             .catch(console.log);
     }
@@ -69,10 +69,10 @@ class LapRegistrator extends Component {
     }
 
     refresh(id, data) {
-        const idx = this.state.bbutResults.findIndex(element => element.id === id)
-        let newResults = [...this.state.bbutResults];
+        const idx = this.state.results.findIndex(element => element.id === id)
+        let newResults = [...this.state.results];
         newResults[idx] = data;
-        this.setState({bbutResults: newResults});
+        this.setState({results: newResults});
     }
 
     render() {
@@ -91,7 +91,7 @@ class LapRegistrator extends Component {
             return comparison;
         };
 
-        const lapButtons = this.state.bbutResults
+        const lapButtons = this.state.results
             .sort(compareOnStartNumber)
             .map((result) => {
                 let classValue = "";
@@ -161,7 +161,7 @@ class LapRegistrator extends Component {
         return (
             <div>
                 <SockJsClient url={"/api/live"} topics={["/topics/results"]}
-                              onMessage={(data) => this.setState({bbutResults: data})} ref={(client) => {
+                              onMessage={(data) => this.setState({results: data})} ref={(client) => {
                     this.clientRef = client
                 }}
                               onConnect={() => {

@@ -10,7 +10,7 @@ class ResultList extends Component {
         this.state = {
             type: props.match.params.id,
             clientConnected: false,
-            bbutResults: [],
+            results: [],
             settings: {
                 resultView: {
                     numberOfColumns: 26,
@@ -36,7 +36,7 @@ class ResultList extends Component {
                 return response.json()
             })
             .then(data => {
-                this.setState({bbutResults: data})
+                this.setState({results: data})
             })
             .catch(console.log)
     }
@@ -54,7 +54,7 @@ class ResultList extends Component {
 
     getHighestLapCount() {
         const defaultMaxCount = this.state.settings.resultView.numberOfColumns;
-        const currentMax = Math.max.apply(Math, this.state.bbutResults.map(result => result.laps.length));
+        const currentMax = Math.max.apply(Math, this.state.results.map(result => result.laps.length));
 
         return currentMax > defaultMaxCount ? currentMax : defaultMaxCount;
     }
@@ -95,7 +95,7 @@ class ResultList extends Component {
             return content;
         };
 
-        const resultItems = this.state.bbutResults
+        const resultItems = this.state.results
             .filter((result) => result.participantState !== "NO_SHOW")
             .filter(this.onGender())
             .map((result) => {
@@ -110,7 +110,7 @@ class ResultList extends Component {
         return (
             <div>
                 <SockJsClient url={"/api/live"} topics={["/topics/results"]}
-                              onMessage={(data) => this.setState({bbutResults: data})} ref={(client) => {
+                              onMessage={(data) => this.setState({results: data})} ref={(client) => {
                     this.clientRef = client
                 }}
                               onConnect={() => {

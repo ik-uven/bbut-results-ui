@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import EditParticipantRow from "./edit-participant-row";
 import stateTranslator, {genderTranslator} from "../text-service";
-
 import "../compontents.css"
 
-const defaultCurrentUser = {id: null, firstName: "", lastName: "", club: "", team: "", gender: "MALE"};
+const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", gender: "MALE"};
 
 class ParticipantAdminList extends Component {
 
@@ -14,7 +13,7 @@ class ParticipantAdminList extends Component {
         this.state = {
             participants: [],
             editing: false,
-            currentUser: defaultCurrentUser,
+            currentParticipant: defaultCurrentParticipant,
             deleteConfirmation: {
                 show: false,
                 id: null
@@ -42,10 +41,10 @@ class ParticipantAdminList extends Component {
 
     changeParticipant(id, participant) {
 
-        const endPoint = id !== null ? ["PUT", "/api/admin/participants/" + id] : ["POST", "/api/admin/participants/"];
+        const endPoint = id !== null ? {method: "PUT", url: "/api/admin/participants/" + id} : {method: "POST", url: "/api/admin/participants/"};
 
-        fetch(endPoint[1], {
-            method: endPoint[0],
+        fetch(endPoint.url, {
+            method: endPoint.method,
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(participant)
         })
@@ -74,7 +73,7 @@ class ParticipantAdminList extends Component {
     }
 
     refresh(id, data) {
-        let copy = JSON.parse(JSON.stringify(this.state.participants))
+        let copy = Array.from(this.state.participants);
 
         const currentMaxId = Math.max.apply(Math, copy.map(participant => participant.id));
 
@@ -88,15 +87,15 @@ class ParticipantAdminList extends Component {
 
     render() {
 
-        const updateUser = (updatedParticipant) => {
+        const updateParticipant = (participant) => {
             this.setState({editing: false});
-            this.changeParticipant(updatedParticipant.id, updatedParticipant);
+            this.changeParticipant(participant.id, participant);
         };
 
         const setEditing = (editing) => {
             this.setState({editing: editing});
             if (!editing) {
-                this.setState({currentUser: defaultCurrentUser})
+                this.setState({currentParticipant: defaultCurrentParticipant})
             }
         };
 
@@ -107,7 +106,7 @@ class ParticipantAdminList extends Component {
         const editRow = (participant) => {
             this.setState({editing: true})
             this.setState({
-                currentUser: {
+                currentParticipant: {
                     id: participant.id,
                     firstName: participant.firstName,
                     lastName: participant.lastName,
@@ -132,7 +131,9 @@ class ParticipantAdminList extends Component {
                         <button className="btn btn-danger btn-sm" onClick={() => deleteRow(participant.id)}>Ta bort
                         </button>
                         &nbsp;
-                        <button className="btn btn-primary btn-sm" onClick={() => this.showDeleteConfirmation(false)}>Avbryt</button>
+                        <button className="btn btn-primary btn-sm"
+                                onClick={() => this.showDeleteConfirmation(false)}>Avbryt
+                        </button>
                     </td>
                 );
 
@@ -145,7 +146,8 @@ class ParticipantAdminList extends Component {
                         <button
                             className="btn btn-primary btn-sm"
                             disabled={participant.participantState !== "REGISTERED"}
-                            onClick={() => this.showDeleteConfirmation(true, participant.id)}>Ta bort</button>
+                            onClick={() => this.showDeleteConfirmation(true, participant.id)}>Ta bort
+                        </button>
                     </td>
                 );
             }
@@ -162,41 +164,43 @@ class ParticipantAdminList extends Component {
                     <td className="center">Lagnamn</td>
                     <td className="center">Kön</td>
                     <td className="center">Status</td>
-                    <td><button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button></td>
+                    <td>
+                        <button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button>
+                    </td>
                 </tr>
 
                 {this.state.participants.length > 0 ? (
-                    this.state.editing === true && this.state.currentUser.id === null ? (
+                    this.state.editing === true && this.state.currentParticipant.id === null ? (
                         <EditParticipantRow
                             key={1}
                             state={this.state}
-                            updateUser={updateUser}
+                            updateParticipant={updateParticipant}
                             setEditing={setEditing}
                         />
                     ) : (
-                    this.state.participants.map((participant) => this.state.editing === true
-                        && participant.id === this.state.currentUser.id ?
-                        <EditParticipantRow
-                            key={participant.id}
-                            state={this.state}
-                            updateUser={updateUser}
-                            setEditing={setEditing}
-                        /> :
-                        <tr key={participant.id}>
-                            <td>{participant.id}</td>
-                            <td>{participant.firstName}</td>
-                            <td>{participant.lastName}</td>
-                            <td>{participant.club}</td>
-                            <td>{participant.team}</td>
-                            <td>{genderTranslator(participant.gender)}</td>
-                            <td>{stateTranslator(participant.participantState)}</td>
-                            {actionButtons(participant)}
-                        </tr>
-                    ))
+                        this.state.participants.map((participant) => this.state.editing === true
+                            && participant.id === this.state.currentParticipant.id ?
+                            <EditParticipantRow
+                                key={participant.id}
+                                state={this.state}
+                                updateParticipant={updateParticipant}
+                                setEditing={setEditing}
+                            /> :
+                            <tr key={participant.id}>
+                                <td>{participant.id}</td>
+                                <td>{participant.firstName}</td>
+                                <td>{participant.lastName}</td>
+                                <td>{participant.club}</td>
+                                <td>{participant.team}</td>
+                                <td>{genderTranslator(participant.gender)}</td>
+                                <td>{stateTranslator(participant.participantState)}</td>
+                                {actionButtons(participant)}
+                            </tr>
+                        ))
                 ) : (
-                    <div>
-                        No users
-                    </div>
+                    <tr>
+                        <td>No users</td>
+                    </tr>
                 )}
 
                 </tbody>

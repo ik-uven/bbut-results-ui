@@ -4,11 +4,11 @@ import {genderTranslator} from "../text-service";
 
 const EditParticipantRow = (props) => {
 
-    const [user, setUser] = useState(props.state.currentUser)
+    const [participant, setParticipant] = useState(props.state.currentParticipant)
 
     const handleInputChange = (event) => {
         const {name, value} = event.target
-        setUser({...user, [name]: value})
+        setParticipant({...participant, [name]: value})
     }
 
     return (
@@ -16,7 +16,7 @@ const EditParticipantRow = (props) => {
             <td colSpan={8}>
                 <form onSubmit={(event) => {
                     event.preventDefault()
-                    props.updateUser(user);
+                    props.updateParticipant(participant);
                     props.setEditing(false);
                 }}
                 >
@@ -32,15 +32,15 @@ const EditParticipantRow = (props) => {
                             <td>Status</td>
                             <td></td>
                         </tr>
-                        <tr key={user.id}>
+                        <tr key={participant.id}>
                             <tr>
-                                {user.id}
+                                {participant.id}
                             </tr>
                             <td>
                                 <input
                                     type="text"
                                     name="firstName"
-                                    value={user.firstName}
+                                    value={participant.firstName}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -49,7 +49,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="lastName"
-                                    value={user.lastName}
+                                    value={participant.lastName}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -58,7 +58,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="club"
-                                    value={user.club}
+                                    value={participant.club}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -67,7 +67,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="team"
-                                    value={user.team}
+                                    value={participant.team}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -79,7 +79,7 @@ const EditParticipantRow = (props) => {
                                             type="radio"
                                             name="gender"
                                             value="FEMALE"
-                                            checked={user.gender === "FEMALE"}
+                                            checked={participant.gender === "FEMALE"}
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
@@ -92,7 +92,7 @@ const EditParticipantRow = (props) => {
                                             type="radio"
                                             name="gender"
                                             value="MALE"
-                                            checked={user.gender === "MALE"}
+                                            checked={participant.gender === "MALE"}
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
@@ -100,7 +100,7 @@ const EditParticipantRow = (props) => {
                                     </label>
                                 </div>
                             </td>
-                            <td>{user.participantState}</td>
+                            <td>{participant.participantState}</td>
                             <td>
                                 <button className="btn btn-primary btn-sm">Spara</button>
                                 &nbsp;
