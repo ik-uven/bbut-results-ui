@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import EditParticipantRow from "./edit-participant-row";
+import stateTranslator, {genderTranslator} from "../text-service";
+
 import "../compontents.css"
 
 const defaultCurrentUser = {id: null, firstName: "", lastName: "", club: "", team: "", gender: "MALE"};
@@ -85,33 +87,6 @@ class ParticipantAdminList extends Component {
     }
 
     render() {
-
-        const nbsp = (string) => {
-            return string !== null ? string.replace(/ /g, "\u00a0") : string;
-        };
-
-        const stateTranslator = (participantState) => {
-            let translation = participantState;
-
-            switch (participantState) {
-                case "REGISTERED":
-                    translation = "Anmäld";
-                    break;
-                case "ACTIVE":
-                    translation = "Aktiv";
-                    break;
-                case "RESIGNED":
-                    translation = "Avslutat";
-                    break;
-                case "NO_SHOW":
-                    translation = nbsp("Ej start");
-                    break;
-                default:
-                    break;
-            }
-
-            return translation;
-        };
 
         const updateUser = (updatedParticipant) => {
             this.setState({editing: false});
@@ -213,7 +188,7 @@ class ParticipantAdminList extends Component {
                             <td>{participant.lastName}</td>
                             <td>{participant.club}</td>
                             <td>{participant.team}</td>
-                            <td>{participant.gender === "FEMALE" ? "Kvinna" : "Man"}</td>
+                            <td>{genderTranslator(participant.gender)}</td>
                             <td>{stateTranslator(participant.participantState)}</td>
                             {actionButtons(participant)}
                         </tr>

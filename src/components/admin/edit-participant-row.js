@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import "../compontents.css"
+import {genderTranslator} from "../text-service";
 
 const EditParticipantRow = (props) => {
 
@@ -9,12 +10,6 @@ const EditParticipantRow = (props) => {
         const {name, value} = event.target
         setUser({...user, [name]: value})
     }
-
-    const cellStyleL = {
-        width: 4 + '%',
-        textAlign: "left",
-        whiteSpace: "nowrap"
-    };
 
     return (
         <tr>
@@ -77,7 +72,7 @@ const EditParticipantRow = (props) => {
                                     className="form-control form-control-sm"
                                 />
                             </td>
-                            <td style={cellStyleL}>
+                            <td>
                                 <div className="form-check">
                                     <label>
                                         <input
@@ -88,7 +83,7 @@ const EditParticipantRow = (props) => {
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
-                                        Kvinna
+                                        {genderTranslator("FEMALE")}
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -101,7 +96,7 @@ const EditParticipantRow = (props) => {
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
-                                        Man
+                                        {genderTranslator("MALE")}
                                     </label>
                                 </div>
                             </td>

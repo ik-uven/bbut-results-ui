@@ -1,33 +1,7 @@
 import React from 'react';
+import stateTranslator, {nbsp} from "../text-service";
 
 const ResultItemTeam = (props) => {
-
-    const nbsp = (string) => {
-        return string !== null ? string.replace(/ /g, "\u00a0") : string;
-    };
-
-    const stateTranslator = (participantState) => {
-        let translation = participantState;
-
-        switch (participantState) {
-            case "REGISTERED":
-                translation = "Anmäld";
-                break;
-            case "ACTIVE":
-                translation = "Aktiv";
-                break;
-            case "RESIGNED":
-                translation = "Avslutat";
-                break;
-            case "NO_SHOW":
-                translation = nbsp("Ej start");
-                break;
-            default:
-                break;
-        }
-
-        return translation;
-    };
 
     const stateStyle = {fontStyle: props.participant.participantState !== "ACTIVE" ? "italic" : ""};
 

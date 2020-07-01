@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SockJsClient from "react-stomp";
 import "../compontents.css"
+import stateTranslator, {nbsp} from "../text-service";
 
 class LapRegistrator extends Component {
 
@@ -76,10 +77,6 @@ class LapRegistrator extends Component {
 
     render() {
 
-        const nbsp = (string) => {
-            return string !== null ? string.replace(/ /g, "\u00a0") : string;
-        };
-
         const compareOnStartNumber = (resultA, resultB) => {
             const num1 = resultA.id;
             const num2 = resultB.id;
@@ -92,29 +89,6 @@ class LapRegistrator extends Component {
             }
 
             return comparison;
-        };
-
-        const stateTranslator = (participantState) => {
-            let translation = participantState;
-
-            switch (participantState) {
-                case "REGISTERED":
-                    translation = "Anmäld";
-                    break;
-                case "ACTIVE":
-                    translation = "Aktiv";
-                    break;
-                case "RESIGNED":
-                    translation = "Avslutat";
-                    break;
-                case "NO_SHOW":
-                    translation = nbsp("Ej start");
-                    break;
-                default:
-                    break;
-            }
-
-            return translation;
         };
 
         const lapButtons = this.state.bbutResults
@@ -134,7 +108,7 @@ class LapRegistrator extends Component {
                     <tr key={result.id}>
                         <td>{result.id}</td>
                         <td>{nbsp(result.firstName + " " + result.lastName)}</td>
-                        <td>{nbsp(stateTranslator(result.participantState))}</td>
+                        <td>{stateTranslator(result.participantState)}</td>
                         <td>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
                         <td className={classValue}>&nbsp;</td>
                         <td>
