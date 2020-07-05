@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ResultItemTeam from "./result-item-team";
 import "../compontents.css"
+import BbutTable from "../bbuttable/bbut-table";
 
 class ResultListTeam extends Component {
 
@@ -41,27 +42,6 @@ class ResultListTeam extends Component {
 
     render() {
 
-        const cellStyleR = {width: 4 + '%', textAlign: "right", whiteSpace: "nowrap"};
-        const cellStyleL = {width: 4 + '%', textAlign: "left", whiteSpace: "nowrap"};
-
-        const lapNumbers = () => {
-
-            const lapsToDraw = this.getMaxLap();
-
-            const content = [
-                <td className="center" key="-4">Lagnamn</td>,
-                <td className="center" key="-3">#</td>,
-                <td className="center" key="-2">Namn</td>,
-                <td className="center" key="-1">Status</td>,
-                <td className="center" key="0">Varv</td>];
-
-            for (let i = 0; i < lapsToDraw; i++) {
-                content.push(<td key={i + 1} style={{width: 25 + 'px'}}>{i + 1}</td>)
-            }
-
-            return content;
-        };
-
         const resultItems = this.state.bbutTeamResults
             .flatMap((team) => team.participants)
             .map((participant) => {
@@ -75,28 +55,24 @@ class ResultListTeam extends Component {
                 return (
                     <tr className="center" key={team.name}>
                         <td>{team.name}</td>
-                        <td style={cellStyleR}>{team.totalLaps}</td>
+                        <td className="right">{team.totalLaps}</td>
                     </tr>
                 )
             });
 
         return (
             <div>
-                <table className="table table-dark table-bordered table-sm" style={cellStyleL}>
+                <BbutTable headers={["Lagnamn", "#", "Namn", "Status", "Varv"]}
+                           items={resultItems}
+                           highestLapCount={this.getMaxLap()}/>
+
+                <table className="table table-dark table-bordered table-sm w-25">
                     <tbody>
                     <tr>
-                        <td className="center">Lagnamn</td>
-                        <td className="center">Totalt</td>
+                        <td className="left">Lagnamn</td>
+                        <td className="left">Totalt</td>
                     </tr>
                     {totalTeams}
-                    </tbody>
-                </table>
-                <table className="table table-dark table-bordered table-sm">
-                    <tbody>
-                    <tr>
-                        {lapNumbers()}
-                    </tr>
-                    {resultItems}
                     </tbody>
                 </table>
             </div>
