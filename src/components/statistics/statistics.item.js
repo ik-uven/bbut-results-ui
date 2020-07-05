@@ -1,4 +1,3 @@
-import {nbsp} from "../text-service";
 import React from "react";
 
 const StatisticsItem = (props) => {
@@ -30,10 +29,10 @@ const StatisticsItem = (props) => {
     return (
         <tr>
             <td className="right">{props.statistic.participantId}</td>
-            <td>{nbsp(props.statistic.firstName + " " + props.statistic.lastName)}</td>
-            <td>{nbsp(props.statistic.club)}</td>
-            {props.showTeamsColumn ? <td>{nbsp(props.statistic.team)}</td> : null}
-            <td>{props.statistic.averageLapInMinutes}</td>
+            <td>{props.statistic.firstName + " " + props.statistic.lastName}</td>
+            <td>{props.statistic.club}</td>
+            {props.showTeamsColumn ? <td>{props.statistic.team}</td> : null}
+            <td className="right">{props.statistic.averageLapInMinutes}</td>
             {laps(props.statistic.lapDurations)}{padEmptySlots()}
         </tr>
     );

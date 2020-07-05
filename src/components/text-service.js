@@ -1,9 +1,4 @@
 
-
-export const nbsp = (string) => {
-    return string !== null ? string.replace(/ /g, "\u00a0") : string;
-};
-
 const stateTranslator = (participantState) => {
     let translation = participantState;
 
@@ -18,7 +13,7 @@ const stateTranslator = (participantState) => {
             translation = "Avslutat";
             break;
         case "NO_SHOW":
-            translation = nbsp("Ej start");
+            translation = "Ej start";
             break;
         default:
             break;

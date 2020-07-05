@@ -1,5 +1,5 @@
 import React from 'react';
-import stateTranslator, {nbsp} from "../text-service";
+import stateTranslator from "../text-service";
 
 const ResultItemTeam = (props) => {
 
@@ -14,9 +14,9 @@ const ResultItemTeam = (props) => {
 
     return (
         <tr>
-            <td style={stateStyle}>{nbsp(props.participant.team)}</td>
+            <td style={stateStyle}>{props.participant.team}</td>
             <td className="right">{props.participant.id}</td>
-            <td style={stateStyle}>{nbsp(props.participant.firstName + " " + props.participant.lastName)}</td>
+            <td style={stateStyle}>{props.participant.firstName + " " + props.participant.lastName}</td>
             <td style={stateStyle}>{stateTranslator(props.participant.participantState)}</td>
             <td className="right">{completedLapsCount}</td>
             {laps}

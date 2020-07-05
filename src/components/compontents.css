@@ -2,6 +2,7 @@
 td {
     width: 4%;
     text-align: left;
+    white-space: nowrap;
 }
 
 td.right {

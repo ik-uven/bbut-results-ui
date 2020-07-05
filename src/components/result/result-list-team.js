@@ -41,10 +41,6 @@ class ResultListTeam extends Component {
 
     render() {
 
-        const nbsp = (string) => {
-            return string !== null ? string.replace(/ /g, "\u00a0") : string;
-        };
-
         const cellStyleR = {width: 4 + '%', textAlign: "right", whiteSpace: "nowrap"};
         const cellStyleL = {width: 4 + '%', textAlign: "left", whiteSpace: "nowrap"};
 
@@ -78,7 +74,7 @@ class ResultListTeam extends Component {
             .map((team) => {
                 return (
                     <tr className="center" key={team.name}>
-                        <td>{nbsp(team.name)}</td>
+                        <td>{team.name}</td>
                         <td style={cellStyleR}>{team.totalLaps}</td>
                     </tr>
                 )

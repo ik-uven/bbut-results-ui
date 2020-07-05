@@ -1,6 +1,6 @@
 import React from 'react';
 import "../compontents.css"
-import stateTranslator, {nbsp} from "../text-service";
+import stateTranslator from "../text-service";
 
 const ResultItem = (props) => {
 
@@ -38,14 +38,14 @@ const ResultItem = (props) => {
     };
 
     const teamsColumn = () => {
-        return props.showTeamsColumn ? <td style={stateStyle}>{nbsp(props.result.team)}</td> : null;
+        return props.showTeamsColumn ? <td style={stateStyle}>{props.result.team}</td> : null;
     };
 
     return (
         <tr>
             <td className="right">{props.result.id}</td>
-            <td style={stateStyle}>{nbsp(props.result.firstName + " " + props.result.lastName)}</td>
-            <td style={stateStyle}>{nbsp(props.result.club)}</td>
+            <td style={stateStyle}>{props.result.firstName + " " + props.result.lastName}</td>
+            <td style={stateStyle}>{props.result.club}</td>
             {teamsColumn()}
             <td style={stateStyle}>{stateTranslator(props.result.participantState)}</td>
             <td className="right">{completedLapsCount}</td>

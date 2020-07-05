@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SockJsClient from "react-stomp";
 import "../compontents.css"
-import stateTranslator, {nbsp} from "../text-service";
+import stateTranslator from "../text-service";
 
 class LapRegistrator extends Component {
 
@@ -107,7 +107,7 @@ class LapRegistrator extends Component {
                 return (
                     <tr key={result.id}>
                         <td>{result.id}</td>
-                        <td>{nbsp(result.firstName + " " + result.lastName)}</td>
+                        <td>{result.firstName + " " + result.lastName}</td>
                         <td>{stateTranslator(result.participantState)}</td>
                         <td>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
                         <td className={classValue}>&nbsp;</td>
@@ -134,25 +134,25 @@ class LapRegistrator extends Component {
                             <button value="activate"
                                     disabled={result.participantState === "ACTIVE"}
                                     className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{nbsp("Aktivera")}</button>
+                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>Aktivera</button>
                         </td>
                         <td>
                             <button value="resign"
                                     disabled={result.participantState === "RESIGNED"}
                                     className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{nbsp("Avsluta")}</button>
+                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>Avsluta</button>
                         </td>
                         <td>
                             <button value="noShow"
                                     disabled={result.participantState === "NO_SHOW" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>{nbsp("Ej start")}</button>
+                                    onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>Ej start</button>
                         </td>
                         <td>
                             <button value="registered"
                                     disabled={result.participantState === "REGISTERED" || hasRegisteredLaps}
                                     className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>{nbsp("Anmäld")}</button>
+                                    onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>Anmäld</button>
                         </td>
                     </tr>
                 );
