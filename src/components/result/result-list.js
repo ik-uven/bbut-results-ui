@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ResultItem from "./result-item";
 import SockJsClient from "react-stomp";
+import BbutTable from "../bbuttable/bbut-table";
 
 class ResultList extends Component {
 
@@ -61,38 +62,18 @@ class ResultList extends Component {
 
     render() {
 
-        const lapNumbers = () => {
+        const headerItems = () => {
+            const headerItems = [];
 
-            const lapsToDraw = this.getHighestLapCount();
+            headerItems.push("#", "Namn", "Klubb");
 
-            const content = [];
-            content.push(<td className="center" key="-5">#</td>);
-            content.push(<td className="center" key="-4">Namn</td>);
-            content.push(<td className="center" key="-3">Klubb</td>);
-            if (this.state.settings.resultView.showTeamsColumn) {
-                content.push(<td className="center" key="-2">Lagnamn</td>);
-            }
-            content.push(<td className="center" key="-1">Status</td>);
-            content.push(<td className="center" key="0">Varv</td>);
-
-            for (let i = 0; i < lapsToDraw; i++) {
-                const lapNumber = i + 1;
-
-                let lapNumberString;
-
-                // Add some space before numbers below 10 and for number 11
-                if (lapNumber < 10) {
-                    lapNumberString = "\u00a0\u00a0" + lapNumber
-                } else if (lapNumber === 11) {
-                    lapNumberString = "\u00a0" + lapNumber;
-                } else {
-                    lapNumberString = lapNumber;
-                }
-
-                content.push(<td key={lapNumber} style={{width: 25 + 'px'}}>{lapNumberString}</td>);
+            if (this.state.settings.resultView.showTeamsColumn){
+                headerItems.push("Lagnamn");
             }
 
-            return content;
+            headerItems.push("Status", "Varv");
+
+            return headerItems;
         };
 
         const resultItems = this.state.results
@@ -110,9 +91,7 @@ class ResultList extends Component {
         return (
             <div>
                 <SockJsClient url={"/api/live"} topics={["/topics/results"]}
-                              onMessage={(data) => this.setState({results: data})} ref={(client) => {
-                    this.clientRef = client
-                }}
+                              onMessage={(data) => this.setState({results: data})} ref={(client) => {this.clientRef = client}}
                               onConnect={() => {
                                   this.setState({clientConnected: true})
                               }}
@@ -121,14 +100,10 @@ class ResultList extends Component {
                               }}
                               debug={true}/>
 
-                <table className="table table-dark table-bordered table-sm">
-                    <tbody>
-                    <tr>
-                        {lapNumbers()}
-                    </tr>
-                    {resultItems}
-                    </tbody>
-                </table>
+                <BbutTable headers={headerItems()}
+                           items={resultItems}
+                           showTeamsColumn={this.state.settings.resultView.showTeamsColumn}
+                           highestLapCount={this.getHighestLapCount()}/>
             </div>
         );
     }

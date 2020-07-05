@@ -6,6 +6,7 @@ import BbutQrReader from "./components/bbut-qr-reader";
 import ResultListTeam from "./components/result/result-list-team";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import ParticipantAdminList from "./components/admin/participant-admin-list";
+import StatisticsList from "./components/statistics/statistics-list";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/registrator" component={LapRegistrator}/>
                     <Route path="/admin" component={ParticipantAdminList}/>
                     <Route path="/reader" component={BbutQrReader}/>
+                    <Route path="/statistics" component={StatisticsList}/>
                     <Route component={Error}/>
                 </Switch>
             </div>
