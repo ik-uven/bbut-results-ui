@@ -12,3 +12,11 @@ td.right {
 td.center {
     text-align: center;
 }
+
+.bg-pale {
+    background-color: lavender;
+}
+
+.my-white {
+    color: white;
+}
