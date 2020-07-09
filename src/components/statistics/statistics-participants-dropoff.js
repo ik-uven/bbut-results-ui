@@ -23,7 +23,7 @@ class StatisticsParticipantsDropOff extends Component {
     }
 
     loadStatisticsLapCounts() {
-        fetch('/api/participants/statistics/lapcounts')
+        fetch('/api/participants/statistics/participantsperlap')
             .then(response => {
                 return response.json()
             })
