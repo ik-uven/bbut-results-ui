@@ -2,8 +2,9 @@ import React, {Component} from "react";
 import {CartesianGrid, Label, Line, LineChart, Tooltip, XAxis} from "recharts";
 import YAxis from "recharts/lib/cartesian/YAxis";
 import {scaleLinear} from 'd3-scale';
+import "./statistics.css"
 
-class StatisticsParticipantsDropOff extends Component {
+class StatisticsParticipantsCompletedLaps extends Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +24,7 @@ class StatisticsParticipantsDropOff extends Component {
     }
 
     loadStatisticsLapCounts() {
-        fetch('/api/participants/statistics/participantsperlap')
+        fetch('/api/participants/statistics/completedlaps')
             .then(response => {
                 return response.json()
             })
@@ -51,6 +52,7 @@ class StatisticsParticipantsDropOff extends Component {
         if (this.state.statistics.countsPerLaps.length > 1) {
             return (
                 <div>
+                    <div className="left white text-margin">Godkända varv per deltagare</div>
                     <LineChart
                         fill="#ffffff"
                         width={900}
@@ -68,9 +70,9 @@ class StatisticsParticipantsDropOff extends Component {
                 </div>
             );
         } else {
-            return <div className="my-white">Diagram visas då deltagare passerat första varvet</div>
+            return <div className="white">Diagram visas då deltagare passerat första varvet</div>
         }
     }
 }
 
-export default StatisticsParticipantsDropOff
+export default StatisticsParticipantsCompletedLaps
