@@ -9,3 +9,16 @@
 .text-margin {
     margin-left: 110px;
 }
+
+.custom-tooltip {
+    background-color: #1b1e21;
+}
+
+.custom-tooltip .group {
+    padding: 10px 10px 5px;
+}
+
+.custom-tooltip .label {
+    color: #C3E6CB;
+}
+

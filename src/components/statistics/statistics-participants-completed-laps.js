@@ -4,6 +4,21 @@ import YAxis from "recharts/lib/cartesian/YAxis";
 import {scaleLinear} from 'd3-scale';
 import "./statistics.css"
 
+const CustomTooltip = ({active, payload, label}) => {
+    if (active) {
+        return (
+            <div className="custom-tooltip">
+                <div className="group">
+                    <p className="label">{`Varv: ${label}`}</p>
+                    <p className="label">{`Deltagare: ${payload[0].value}`}</p>
+                </div>
+            </div>
+        );
+    }
+
+    return null;
+};
+
 class StatisticsParticipantsCompletedLaps extends Component {
 
     constructor(props) {
@@ -52,19 +67,19 @@ class StatisticsParticipantsCompletedLaps extends Component {
         if (this.state.statistics.countsPerLaps.length > 1) {
             return (
                 <div>
-                    <div className="left white text-margin">Godkända varv per deltagare</div>
+                    <div className="left white text-margin">Avklarade varv per deltagare</div>
                     <LineChart
                         fill="#ffffff"
                         width={900}
                         height={600}
                         data={this.state.statistics.countsPerLaps}
                         margin={{top: 5, right: 20, left: 10, bottom: 5}}>
-                        <XAxis dataKey="lap" height={100} label={"Varv"} />
+                        <XAxis dataKey="lap" height={100} label={"Varv"}/>
                         <YAxis scale={scaleLinear()} domain={['auto', 'auto']} ticks={ticks()} width={100}>
-                            <Label value="Antal deltagare" position="center" angle={90} />
+                            <Label value="Antal deltagare" position="center" angle={90}/>
                         </YAxis>
-                        <Tooltip labelStyle={{color: "#C3E6CB"}} contentStyle={{background: "black"}} itemStyle={{background: "black"}} />
-                        <CartesianGrid stroke="#666666" />
+                        <Tooltip content={<CustomTooltip/>}/>
+                        <CartesianGrid stroke="#666666"/>
                         <Line type="monotone" dataKey="participants" stroke="#C3E6CB" strokeWidth="2" yAxisId={0}/>
                     </LineChart>
                 </div>
