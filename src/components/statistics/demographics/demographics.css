@@ -1,0 +1,15 @@
+#left-column, #right-column {
+    float: left;
+    min-height: 450px;
+    color: white;
+}
+#left-column {
+    width: 550px;
+}
+#right-column {
+    width: 550px;
+}
+
+.label {
+    padding-bottom: 40px;
+}

@@ -22,15 +22,15 @@ const stateTranslator = (participantState) => {
     return translation;
 };
 
-export const genderTranslator = (gender) => {
+export const classTranslator = (participantClass) => {
     let translation;
 
-    switch (gender) {
-        case "MALE":
-            translation = "Man";
+    switch (participantClass) {
+        case "MEN":
+            translation = "Herrar";
             break;
         default:
-            translation = "Kvinna";
+            translation = "Damer";
             break;
     }
 

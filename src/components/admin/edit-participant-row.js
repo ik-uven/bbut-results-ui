@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import "../compontents.css"
-import {genderTranslator} from "../text-service";
+import {classTranslator} from "../text-service";
 
 const EditParticipantRow = (props) => {
+
+    console.log(props.state.currentParticipant)
 
     const [participant, setParticipant] = useState(props.state.currentParticipant)
 
@@ -28,14 +30,14 @@ const EditParticipantRow = (props) => {
                             <td>Efternamn</td>
                             <td>Klubb</td>
                             <td>Lagnamn</td>
-                            <td>Kön</td>
+                            <td>Klass</td>
                             <td>Status</td>
                             <td></td>
                         </tr>
                         <tr key={participant.id}>
-                            <tr>
+                            <td>
                                 {participant.id}
-                            </tr>
+                            </td>
                             <td>
                                 <input
                                     type="text"
@@ -58,7 +60,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="club"
-                                    value={participant.club}
+                                    value={participant.club !== null ? participant.club : ""}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -67,7 +69,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="team"
-                                    value={participant.team}
+                                    value={participant.team !== null ? participant.club : ""}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
@@ -77,26 +79,26 @@ const EditParticipantRow = (props) => {
                                     <label>
                                         <input
                                             type="radio"
-                                            name="gender"
-                                            value="FEMALE"
-                                            checked={participant.gender === "FEMALE"}
+                                            name="participantClass"
+                                            value="WOMEN"
+                                            checked={participant.participantClass === "WOMEN"}
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
-                                        {genderTranslator("FEMALE")}
+                                        {classTranslator("WOMEN")}
                                     </label>
                                 </div>
                                 <div className="form-check">
                                     <label>
                                         <input
                                             type="radio"
-                                            name="gender"
-                                            value="MALE"
-                                            checked={participant.gender === "MALE"}
+                                            name="participantClass"
+                                            value="MEN"
+                                            checked={participant.participantClass === "MEN"}
                                             onChange={handleInputChange}
                                             className="form-check-input"
                                         />
-                                        {genderTranslator("MALE")}
+                                        {classTranslator("MEN")}
                                     </label>
                                 </div>
                             </td>

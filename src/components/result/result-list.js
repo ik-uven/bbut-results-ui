@@ -78,7 +78,7 @@ class ResultList extends Component {
 
         const resultItems = this.state.results
             .filter((result) => result.participantState !== "NO_SHOW")
-            .filter(this.onGender())
+            .filter(this.onParticipantClass())
             .map((result) => {
                 return (
                     <ResultItem key={result.id}
@@ -108,11 +108,11 @@ class ResultList extends Component {
         );
     }
 
-    onGender() {
+    onParticipantClass() {
         return (result) => {
             if (this.state.type === "men" || this.state.type === "women") {
-                const filterValue = this.state.type === "women" ? "FEMALE" : "MALE";
-                return result.gender === filterValue;
+                const filterValue = this.state.type === "women" ? "WOMEN" : "MEN";
+                return result.participantClass === filterValue;
             } else {
                 return result.id > 0;
             }

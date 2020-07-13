@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import EditParticipantRow from "./edit-participant-row";
-import stateTranslator, {genderTranslator} from "../text-service";
+import stateTranslator, {classTranslator} from "../text-service";
 import "../compontents.css"
 
-const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", gender: "MALE"};
+const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", participantClass: "MEN"};
 
 class ParticipantAdminList extends Component {
 
@@ -112,7 +112,7 @@ class ParticipantAdminList extends Component {
                     lastName: participant.lastName,
                     club: participant.club,
                     team: participant.team,
-                    gender: participant.gender,
+                    participantClass: participant.participantClass,
                     participantState: stateTranslator(participant.participantState)
                 }
             })
@@ -162,7 +162,7 @@ class ParticipantAdminList extends Component {
                     <td className="center">Efternamn</td>
                     <td className="center">Klubb</td>
                     <td className="center">Lagnamn</td>
-                    <td className="center">Kön</td>
+                    <td className="center">Klass</td>
                     <td className="center">Status</td>
                     <td>
                         <button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button>
@@ -192,7 +192,7 @@ class ParticipantAdminList extends Component {
                                 <td>{participant.lastName}</td>
                                 <td>{participant.club}</td>
                                 <td>{participant.team}</td>
-                                <td>{genderTranslator(participant.gender)}</td>
+                                <td>{classTranslator(participant.participantClass)}</td>
                                 <td>{stateTranslator(participant.participantState)}</td>
                                 {actionButtons(participant)}
                             </tr>
