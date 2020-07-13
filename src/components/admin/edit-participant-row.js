@@ -69,7 +69,7 @@ const EditParticipantRow = (props) => {
                                 <input
                                     type="text"
                                     name="team"
-                                    value={participant.team !== null ? participant.club : ""}
+                                    value={participant.team !== null ? participant.team : ""}
                                     onChange={handleInputChange}
                                     className="form-control form-control-sm"
                                 />
