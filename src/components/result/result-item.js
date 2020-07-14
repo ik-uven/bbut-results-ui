@@ -14,9 +14,6 @@ const ResultItem = (props) => {
         let cellContent;
 
         if (lap.number === lapCount && props.result.participantState === "RESIGNED") {
-            //cellContent = "\u2736";
-            //cellContent = "👣";
-            //cellContent = "🏁";
             cellContent = "⚑";
         }
 

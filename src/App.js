@@ -8,8 +8,6 @@ import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import ParticipantAdminList from "./components/admin/participant-admin-list";
 import StatisticsList from "./components/statistics/statistics-list";
 import StatisticsParticipantsCompletedLaps from "./components/statistics/statistics-participants-completed-laps";
-import StatisticsClass from "./components/statistics/demographics/statistics-class";
-import StatisticsAge from "./components/statistics/demographics/statistics-age";
 import Demographics from "./components/statistics/demographics/demographics";
 
 function App() {

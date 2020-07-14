@@ -6,7 +6,7 @@ const StatisticsItem = (props) => {
         const content = [];
 
         lapDurations.map(lapDuration => {
-            content.push(<td key={lapDuration.lapNumber}>{lapDuration.roundedInMinutes}</td>)
+            return content.push(<td key={lapDuration.lapNumber}>{lapDuration.roundedInMinutes}</td>)
         });
 
         return content;

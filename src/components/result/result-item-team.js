@@ -1,4 +1,5 @@
 import React from 'react';
+import "../compontents.css"
 import stateTranslator from "../text-service";
 
 const ResultItemTeam = (props) => {
@@ -8,8 +9,15 @@ const ResultItemTeam = (props) => {
     const completedLapsCount = props.participant.laps.filter((lap) => lap.state === "COMPLETED").length;
 
     const laps = props.participant.laps.map((lap) => {
-        const classValue = lap.state === "COMPLETED" ? "table-success" : "table-warning";
-        return <td key={lap.number} className={classValue}>{" "}</td>
+        const classValue = lap.state === "COMPLETED" ? "lap-completed" : "lap-overdue";
+        const lapCount = props.participant.laps.length;
+        let cellContent;
+
+        if (lap.number === lapCount && props.participant.participantState === "RESIGNED") {
+            cellContent = "⚑";
+        }
+
+        return <td key={lap.number} className={classValue}>{cellContent}</td>
     });
 
     return (

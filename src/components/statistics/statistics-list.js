@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import StatisticsItem from "./statistics.item";
+import StatisticsItem from "./statistics-item";
 import BbutTable from "../bbuttable/bbut-table";
 
 class StatisticsList extends Component {

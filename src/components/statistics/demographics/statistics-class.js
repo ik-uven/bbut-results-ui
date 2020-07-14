@@ -4,15 +4,10 @@ import Legend from "recharts/lib/component/Legend";
 import "./demographics.css";
 import {classTranslator} from "../../text-service";
 
-const data = [
-    {name: 'Herrar', value: 34},
-    {name: 'Damer', value: 8}
-];
-
 const COLORS = ['#C3E6CB', '#FFFFCC'];
 
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index}) => {
+const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent}) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
