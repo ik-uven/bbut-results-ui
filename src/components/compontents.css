@@ -12,3 +12,7 @@ td.right {
 td.center {
     text-align: center;
 }
+
+hr {
+    border-top: 1px dashed #4e555b;
+}

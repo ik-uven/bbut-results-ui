@@ -62,9 +62,7 @@ class ResultListTeam extends Component {
 
         return (
             <div>
-                <BbutTable headers={["Lagnamn", "#", "Namn", "Status", "Varv"]}
-                           items={resultItems}
-                           highestLapCount={this.getMaxLap()}/>
+
 
                 <table className="table table-dark table-bordered table-sm w-25">
                     <tbody>
@@ -75,6 +73,10 @@ class ResultListTeam extends Component {
                     {totalTeams}
                     </tbody>
                 </table>
+                <hr/>
+                <BbutTable headers={["Lagnamn", "#", "Namn", "Status", "Varv"]}
+                           items={resultItems}
+                           highestLapCount={this.getMaxLap()}/>
             </div>
         );
     }
