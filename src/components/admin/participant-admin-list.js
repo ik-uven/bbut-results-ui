@@ -41,12 +41,27 @@ class ParticipantAdminList extends Component {
 
     changeParticipant(id, participant) {
 
-        const endPoint = id !== null ? {method: "PUT", url: "/api/admin/participants/" + id} : {method: "POST", url: "/api/admin/participants/"};
+        const endPoint = id !== null ? {method: "PUT", url: "/api/admin/participants/" + id} : {
+            method: "POST",
+            url: "/api/admin/participants/"
+        };
 
         fetch(endPoint.url, {
             method: endPoint.method,
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(participant)
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(data => this.refresh(id, data))
+            .catch(console.log);
+    }
+
+    changeParticipantState(id, state) {
+        fetch('/api/participants/' + id + '/states/' + state, {
+            method: 'PUT',
+            headers: {"Content-Type": "application/json"}
         })
             .then(response => {
                 return response.json()
@@ -123,6 +138,36 @@ class ParticipantAdminList extends Component {
             this.showDeleteConfirmation(false);
         };
 
+        const statusButtons = (participant) => {
+            const hasRegisteredLaps = participant.laps.length > 0;
+
+            return (
+                <div>
+                    <button value="activate"
+                            disabled={participant.participantState === "ACTIVE"}
+                            className={participant.participantState === "ACTIVE" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "ACTIVE")}>Aktivera
+                    </button>
+                    &nbsp;
+                    <button value="resign"
+                            disabled={participant.participantState === "RESIGNED"}
+                            className={participant.participantState === "RESIGNED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>Avsluta</button>
+                    &nbsp;
+                    <button value="noShow"
+                            disabled={participant.participantState === "NO_SHOW" || hasRegisteredLaps}
+                            className={participant.participantState === "NO_SHOW" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>Ej start</button>
+                    &nbsp;
+                    <button value="registered"
+                            disabled={participant.participantState === "REGISTERED" || hasRegisteredLaps}
+                            className={participant.participantState === "REGISTERED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>Anmäld</button>
+
+                </div>
+            );
+        };
+
         const actionButtons = (participant) => {
             if (this.state.deleteConfirmation.show && this.state.deleteConfirmation.id === participant.id) {
                 return (
@@ -193,7 +238,7 @@ class ParticipantAdminList extends Component {
                                 <td>{participant.club}</td>
                                 <td>{participant.team}</td>
                                 <td>{classTranslator(participant.participantClass)}</td>
-                                <td>{stateTranslator(participant.participantState)}</td>
+                                <td>{statusButtons(participant)}</td>
                                 {actionButtons(participant)}
                             </tr>
                         ))

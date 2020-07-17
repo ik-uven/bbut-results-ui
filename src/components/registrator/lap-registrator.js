@@ -2,18 +2,23 @@ import React, {Component} from 'react';
 import SockJsClient from "react-stomp";
 import "../compontents.css"
 import stateTranslator from "../text-service";
+import Switch from "../switch/switch";
 
 class LapRegistrator extends Component {
 
     constructor(props) {
         super(props);
 
+        console.log(props)
+
         this.state = {
             clientConnected: false,
-            results: []
+            results: [],
+            sortOnStates: false
         };
 
         this.reloadResultList = this.reloadResultList.bind(this);
+        this.handleStateSortToggle = this.handleStateSortToggle.bind(this);
 
         this.reloadResultList();
     }
@@ -77,22 +82,34 @@ class LapRegistrator extends Component {
 
     render() {
 
-        const compareOnStartNumber = (resultA, resultB) => {
+        const compareOnStateAndStartNumber = (resultA, resultB) => {
             const num1 = resultA.id;
             const num2 = resultB.id;
 
             let comparison = 0;
+
+            if (this.state.sortOnStates && resultA.participantState > resultB.participantState) {
+                return 1;
+            }
+
+            if (this.state.sortOnStates && resultA.participantState < resultB.participantState) {
+                return -1;
+            }
+
             if (num1 > num2) {
-                comparison = 1;
-            } else if (num1 < num2) {
-                comparison = -1;
+                return 1;
+            }
+
+            if (num1 < num2) {
+                return -1;
             }
 
             return comparison;
         };
 
         const lapButtons = this.state.results
-            .sort(compareOnStartNumber)
+            .filter(result => result.participantState === "ACTIVE" || result.participantState === "RESIGNED")
+            .sort(compareOnStateAndStartNumber)
             .map((result) => {
                 let classValue = "";
 
@@ -133,26 +150,16 @@ class LapRegistrator extends Component {
                         <td>
                             <button value="activate"
                                     disabled={result.participantState === "ACTIVE"}
-                                    className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>Aktivera</button>
+                                    className={result.participantState === "ACTIVE" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>Aktivera
+                            </button>
                         </td>
                         <td>
                             <button value="resign"
                                     disabled={result.participantState === "RESIGNED"}
-                                    className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>Avsluta</button>
-                        </td>
-                        <td>
-                            <button value="noShow"
-                                    disabled={result.participantState === "NO_SHOW" || hasRegisteredLaps}
-                                    className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "NO_SHOW")}>Ej start</button>
-                        </td>
-                        <td>
-                            <button value="registered"
-                                    disabled={result.participantState === "REGISTERED" || hasRegisteredLaps}
-                                    className="btn btn-primary btn-sm"
-                                    onClick={(e) => this.changeParticipantState(result.id, "REGISTERED")}>Anmäld</button>
+                                    className={result.participantState === "RESIGNED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
+                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>Avsluta
+                            </button>
                         </td>
                     </tr>
                 );
@@ -175,6 +182,17 @@ class LapRegistrator extends Component {
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>
+                        <td colSpan={8}>
+                            <div className="items-center">
+                                Prioritera aktiva deltagare
+                                <Switch
+                                    isOn={this.state.sortOnStates}
+                                    onColor={'#C3E6CB'}
+                                    handleToggle={this.handleStateSortToggle}/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td className="center">#</td>
                         <td className="center">Namn</td>
                         <td className="center">Status</td>
@@ -187,6 +205,10 @@ class LapRegistrator extends Component {
                 </table>
             </div>
         );
+    }
+
+    handleStateSortToggle() {
+        this.setState({sortOnStates: !this.state.sortOnStates});
     }
 
     getLatestLapId(result) {
