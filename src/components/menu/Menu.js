@@ -5,23 +5,23 @@ export default ({ close }) => (
     <div className="menu">
         <ul>
             <li>
-                <NavLink exact onClick={close} activeClassName="current" to="/results">
-                    Resultat (leaderboard)
+                <NavLink exact onClick={close} activeClassName="current" to="/results?hideMenu=true">
+                    Resultat
                 </NavLink>
             </li>
             <li className="submenu">
                 <NavLink exact onClick={close} activeClassName="current" to="/results/women">
-                    Resultat Damer
+                    Damer
                 </NavLink>
             </li>
             <li className="submenu">
                 <NavLink exact onClick={close} activeClassName="current" to="/results/men">
-                    Resultat Herrar
+                    Herrar
                 </NavLink>
             </li>
             <li className="submenu">
                 <NavLink exact onClick={close} activeClassName="current" to="/results/teams">
-                    Resultat Lag
+                    Lag
                 </NavLink>
             </li>
             <li>
@@ -41,12 +41,12 @@ export default ({ close }) => (
             </li>
             <li className="submenu">
                 <NavLink exact onClick={close} activeClassName="current" to="/statistics/completedlaps">
-                    Statistik burndown chart
+                    Burndown chart
                 </NavLink>
             </li>
             <li className="submenu">
                 <NavLink exact onClick={close} activeClassName="current" to="/statistics/demographics">
-                    Statistik demografi
+                    Demografi
                 </NavLink>
             </li>
         </ul>

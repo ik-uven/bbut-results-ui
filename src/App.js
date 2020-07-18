@@ -9,43 +9,17 @@ import ParticipantAdminList from "./components/admin/participant-admin-list";
 import StatisticsList from "./components/statistics/statistics-list";
 import StatisticsParticipantsCompletedLaps from "./components/statistics/statistics-participants-completed-laps";
 import Demographics from "./components/statistics/demographics/demographics";
-import BurgerIcon from "./components/menu/BurgerIcon";
-import Menu from "./components/menu/Menu";
-import Popup from "reactjs-popup";
-
-const contentStyle = {
-    background: "rgba(255,255,255,0)",
-    width: "80%",
-    border: "none"
-};
-
-const menu = (location) => {
-    let content = <Popup
-        modal
-        overlayStyle={{background: "#282c34"}}
-        contentStyle={contentStyle}
-        closeOnDocumentClick={false}
-        trigger={open => <BurgerIcon open={open}/>}
-    >
-        {close => <Menu close={close}/>}
-    </Popup>;
-
-    if (location.search.toString().includes('hideMenu=true')) {
-        content = null;
-    }
-
-    return content;
-}
+import MenuView from "./components/menu/MenuView";
 
 function App() {
 
     return (
         <BrowserRouter forceRefresh={true}>
             <div className="App">
-                {menu(useLocation())}
+                <MenuView location={useLocation()} />
                 <Switch>
                     <Route exact path="/">
-                        <Redirect to="/results"/>
+                        <Redirect to="/registrator"/>
                     </Route>
                     <Route path="/results/teams" exact component={ResultListTeam}/>
                     <Route exact path={["/results", "/results/:id"]} component={ResultList}/>
