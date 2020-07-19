@@ -1,4 +1,5 @@
 import React from "react";
+import "./menu.css"
 
 export default ({ open, ...props }) => (
     <div className={open ? "burger-menu open" : "burger-menu"} {...props}>

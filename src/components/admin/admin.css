@@ -1,0 +1,22 @@
+
+.editor {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 25px;
+    display: block;
+    text-align: left;
+    padding: 0;
+}
+
+.delete {
+    border: 1px solid #454D55;
+    position: fixed;
+    right: 50px;
+    display: flex;
+    padding: 20px 20px 20px 20px
+}
+
+.delete .buttons {
+    margin-left: 10px;
+}

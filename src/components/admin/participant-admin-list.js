@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import EditParticipantRow from "./edit-participant-row";
-import stateTranslator, {classTranslator} from "../text-service";
+import {classTranslator} from "../text-service";
 import "../compontents.css"
+import EditModal from "./edit-modal";
+import DeleteModal from "./delete-modal";
 
 const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", participantClass: "MEN"};
 
@@ -12,8 +13,6 @@ class ParticipantAdminList extends Component {
 
         this.state = {
             participants: [],
-            editing: false,
-            currentParticipant: defaultCurrentParticipant,
             deleteConfirmation: {
                 show: false,
                 id: null
@@ -103,39 +102,11 @@ class ParticipantAdminList extends Component {
     render() {
 
         const updateParticipant = (participant) => {
-            this.setState({editing: false});
             this.changeParticipant(participant.id, participant);
-        };
-
-        const setEditing = (editing) => {
-            this.setState({editing: editing});
-            if (!editing) {
-                this.setState({currentParticipant: defaultCurrentParticipant})
-            }
-        };
-
-        const createRow = () => {
-            this.setState({editing: true})
-        };
-
-        const editRow = (participant) => {
-            this.setState({editing: true})
-            this.setState({
-                currentParticipant: {
-                    id: participant.id,
-                    firstName: participant.firstName,
-                    lastName: participant.lastName,
-                    club: participant.club,
-                    team: participant.team,
-                    participantClass: participant.participantClass,
-                    participantState: stateTranslator(participant.participantState)
-                }
-            })
         };
 
         const deleteRow = (id) => {
             this.deleteParticipant(id);
-            this.showDeleteConfirmation(false);
         };
 
         const statusButtons = (participant) => {
@@ -152,50 +123,46 @@ class ParticipantAdminList extends Component {
                     <button value="resign"
                             disabled={participant.participantState === "RESIGNED"}
                             className={participant.participantState === "RESIGNED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>Avsluta</button>
+                            onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>Avsluta
+                    </button>
                     &nbsp;
                     <button value="noShow"
                             disabled={participant.participantState === "NO_SHOW" || hasRegisteredLaps}
                             className={participant.participantState === "NO_SHOW" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>Ej start</button>
+                            onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>Ej start
+                    </button>
                     &nbsp;
                     <button value="registered"
                             disabled={participant.participantState === "REGISTERED" || hasRegisteredLaps}
                             className={participant.participantState === "REGISTERED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>Anmäld</button>
+                            onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>Anmäld
+                    </button>
 
                 </div>
             );
         };
 
         const actionButtons = (participant) => {
-            if (this.state.deleteConfirmation.show && this.state.deleteConfirmation.id === participant.id) {
-                return (
-                    <td>
-                        <div>Ta bort<br/>{participant.firstName + " " + participant.lastName}?</div>
-                        <button className="btn btn-danger btn-sm" onClick={() => deleteRow(participant.id)}>Ta bort
-                        </button>
-                        &nbsp;
-                        <button className="btn btn-primary btn-sm"
-                                onClick={() => this.showDeleteConfirmation(false)}>Avbryt
-                        </button>
-                    </td>
-                );
 
-            } else {
-                return (
-                    <td>
-                        <button className="btn btn-primary btn-sm" onClick={() => editRow(participant)}>Ändra
-                        </button>
-                        &nbsp;
-                        <button
-                            className="btn btn-primary btn-sm"
-                            disabled={participant.participantState !== "REGISTERED"}
-                            onClick={() => this.showDeleteConfirmation(true, participant.id)}>Ta bort
-                        </button>
-                    </td>
-                );
-            }
+            return (
+                <td>
+                    <EditModal
+                        trigger={open => <button onClick={open} className="btn btn-primary btn-sm">Ändra</button>}
+                        participant={participant}
+                        updateParticipant={updateParticipant}/>
+                    &nbsp;
+                    <DeleteModal
+                        trigger={open =>
+                            <button
+                                className="btn btn-primary btn-sm"
+                                disabled={participant.participantState !== "REGISTERED"}
+                                onClick={open}>Ta bort</button>
+                        }
+                        participant={participant}
+                        deleteRow={deleteRow}/>
+
+                </td>
+            );
         };
 
         return (
@@ -210,38 +177,26 @@ class ParticipantAdminList extends Component {
                     <td className="center">Klass</td>
                     <td className="center">Status</td>
                     <td>
-                        <button className="btn btn-primary btn-sm" onClick={createRow}>Ny...</button>
+                        <EditModal
+                            trigger={open => <button className="btn btn-primary btn-sm" onClick={open}>Ny...</button>}
+                            participant={defaultCurrentParticipant}
+                            updateParticipant={updateParticipant}/>
                     </td>
                 </tr>
 
                 {this.state.participants.length > 0 ? (
-                    this.state.editing === true && this.state.currentParticipant.id === null ? (
-                        <EditParticipantRow
-                            key={1}
-                            state={this.state}
-                            updateParticipant={updateParticipant}
-                            setEditing={setEditing}
-                        />
-                    ) : (
-                        this.state.participants.map((participant) => this.state.editing === true
-                            && participant.id === this.state.currentParticipant.id ?
-                            <EditParticipantRow
-                                key={participant.id}
-                                state={this.state}
-                                updateParticipant={updateParticipant}
-                                setEditing={setEditing}
-                            /> :
-                            <tr key={participant.id}>
-                                <td>{participant.id}</td>
-                                <td>{participant.firstName}</td>
-                                <td>{participant.lastName}</td>
-                                <td>{participant.club}</td>
-                                <td>{participant.team}</td>
-                                <td>{classTranslator(participant.participantClass)}</td>
-                                <td>{statusButtons(participant)}</td>
-                                {actionButtons(participant)}
-                            </tr>
-                        ))
+                    this.state.participants.map((participant) =>
+                        <tr key={participant.id}>
+                            <td>{participant.id}</td>
+                            <td>{participant.firstName}</td>
+                            <td>{participant.lastName}</td>
+                            <td>{participant.club}</td>
+                            <td>{participant.team}</td>
+                            <td>{classTranslator(participant.participantClass)}</td>
+                            <td>{statusButtons(participant)}</td>
+                            {actionButtons(participant)}
+                        </tr>
+                    )
                 ) : (
                     <tr>
                         <td>No users</td>
