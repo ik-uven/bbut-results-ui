@@ -23,6 +23,7 @@ export default class StatisticsAge extends Component {
         super(props);
 
         this.state = {
+            loadComplete: false,
             ageDemographics: []
         };
 
@@ -40,12 +41,21 @@ export default class StatisticsAge extends Component {
                 return response.json()
             })
             .then(data => {
-                this.setState({ageDemographics: data})
+                this.setState({ageDemographics: data, loadComplete: true})
             })
             .catch(console.log)
     }
 
     render() {
+
+        if (!this.state.loadComplete) {
+            return <div></div>
+        }
+
+        if (this.state.ageDemographics.length === 0 && this.state.loadComplete) {
+            return <div>Diagram visas då deltagare aktiverats</div>
+        }
+
         return (
             <div>
                 <div className="label">Åldersfördelning</div>

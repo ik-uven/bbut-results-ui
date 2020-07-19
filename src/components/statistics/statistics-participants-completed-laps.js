@@ -25,6 +25,7 @@ class StatisticsParticipantsCompletedLaps extends Component {
         super(props);
 
         this.state = {
+            loadComplete: false,
             statistics: {
                 totalParticipants: 0,
                 countsPerLaps: []
@@ -45,13 +46,20 @@ class StatisticsParticipantsCompletedLaps extends Component {
             })
             .then(data => {
                 data.countsPerLaps.unshift({lap: 0, participants: data.totalParticipants});
-                this.setState({statistics: data});
-                console.log(data);
+                this.setState({statistics: data, loadComplete: true});
             })
             .catch(console.log)
     }
 
     render() {
+
+        if (!this.state.loadComplete) {
+            return <div></div>
+        }
+
+        if (this.state.statistics.countsPerLaps.length === 1 && this.state.loadComplete) {
+            return <div className="white">Diagram visas då deltagare passerat första varvet</div>
+        }
 
         const ticks = () => {
 
@@ -64,29 +72,25 @@ class StatisticsParticipantsCompletedLaps extends Component {
             return result;
         };
 
-        if (this.state.statistics.countsPerLaps.length > 1) {
-            return (
-                <div>
-                    <div className="left white text-margin">Avklarade varv per deltagare</div>
-                    <LineChart
-                        fill="#ffffff"
-                        width={900}
-                        height={600}
-                        data={this.state.statistics.countsPerLaps}
-                        margin={{top: 5, right: 20, left: 10, bottom: 5}}>
-                        <XAxis dataKey="lap" height={100} label={"Varv"}/>
-                        <YAxis scale={scaleLinear()} domain={['auto', 'auto']} ticks={ticks()} width={100}>
-                            <Label value="Antal deltagare" position="center" angle={90}/>
-                        </YAxis>
-                        <Tooltip content={<CustomTooltip/>}/>
-                        <CartesianGrid stroke="#666666"/>
-                        <Line type="monotone" dataKey="participants" stroke="#C3E6CB" strokeWidth="2" yAxisId={0}/>
-                    </LineChart>
-                </div>
-            );
-        } else {
-            return <div className="white">Diagram visas då deltagare passerat första varvet</div>
-        }
+        return (
+            <div>
+                <div className="left white text-margin">Avklarade varv per deltagare</div>
+                <LineChart
+                    fill="#ffffff"
+                    width={900}
+                    height={600}
+                    data={this.state.statistics.countsPerLaps}
+                    margin={{top: 5, right: 20, left: 10, bottom: 5}}>
+                    <XAxis dataKey="lap" height={100} label={"Varv"}/>
+                    <YAxis scale={scaleLinear()} domain={['auto', 'auto']} ticks={ticks()} width={100}>
+                        <Label value="Antal deltagare" position="center" angle={90}/>
+                    </YAxis>
+                    <Tooltip content={<CustomTooltip/>}/>
+                    <CartesianGrid stroke="#666666"/>
+                    <Line type="monotone" dataKey="participants" stroke="#C3E6CB" strokeWidth="2" yAxisId={0}/>
+                </LineChart>
+            </div>
+        );
     }
 }
 
