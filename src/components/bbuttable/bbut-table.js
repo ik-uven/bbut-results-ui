@@ -25,14 +25,14 @@ const BbutTable = (props) => {
                 lapNumberString = lapNumber;
             }
 
-            content.push(<td key={lapNumber} style={{width: 25 + 'px'}}>{lapNumberString}</td>);
+            content.push(<td key={lapNumber} className="lap"><div>{lapNumberString}</div></td>);
         }
 
         return content;
     };
 
     return (
-        <table className="table table-dark table-bordered table-sm">
+        <table className="lap-table">
             <tbody>
             <tr>
                 {headers()}

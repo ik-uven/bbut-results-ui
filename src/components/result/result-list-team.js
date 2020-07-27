@@ -53,22 +53,20 @@ class ResultListTeam extends Component {
         const totalTeams = this.state.bbutTeamResults
             .map((team) => {
                 return (
-                    <tr className="center" key={team.name}>
+                    <tr key={team.name}>
                         <td>{team.name}</td>
-                        <td className="right">{team.totalLaps}</td>
+                        <td className="right"><div>{team.totalLaps}</div></td>
                     </tr>
                 )
             });
 
         return (
             <div>
-
-
-                <table className="table table-dark table-bordered table-sm w-25">
+                <table className="team-table">
                     <tbody>
                     <tr>
-                        <td className="left">Lagnamn</td>
-                        <td className="left">Totalt</td>
+                        <td>Lagnamn</td>
+                        <td>Totalt</td>
                     </tr>
                     {totalTeams}
                     </tbody>

@@ -6,7 +6,7 @@ const StatisticsItem = (props) => {
         const content = [];
 
         lapDurations.map(lapDuration => {
-            return content.push(<td key={lapDuration.lapNumber}>{lapDuration.roundedInMinutes}</td>)
+            return content.push(<td key={lapDuration.lapNumber} className="lap center"><div>{lapDuration.roundedInMinutes}</div></td>)
         });
 
         return content;
@@ -20,7 +20,7 @@ const StatisticsItem = (props) => {
         const content = [];
 
         for (let i = 0; i < getNumberOfSlotsToPad(); i++) {
-            content.push(<td key={i}>{" "}</td>)
+            content.push(<td key={i} className="lap"><div>&nbsp;</div></td>)
         }
 
         return content;

@@ -17,7 +17,7 @@ const ResultItem = (props) => {
             cellContent = "⚑";
         }
 
-        return <td key={lap.number} className={classValue}>{cellContent}</td>;
+        return <td key={lap.number} className={classValue}><div>{cellContent}</div></td>;
     });
 
     const getNumberOfSlotsToPad = () => {
@@ -28,7 +28,7 @@ const ResultItem = (props) => {
         const content = [];
 
         for (let i = 0; i < getNumberOfSlotsToPad(); i++) {
-            content.push(<td key={i}>{" "}</td>)
+            content.push(<td key={i} className="lap"><div>&nbsp;</div></td>)
         }
 
         return content;
