@@ -5,16 +5,20 @@ import BbutTable from "../bbuttable/bbut-table";
 import {Title} from "../title/title";
 import moment from "moment-timezone";
 
+const defaultState = {
+    clientConnected: false,
+    teamDtos: [],
+    teamMinSize: 0,
+    fetchTime: "",
+    loadComplete: false
+};
+
 class ResultListTeam extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            clientConnected: false,
-            bbutTeamResults: [],
-            fetchTime: ""
-        };
+        this.state = defaultState;
 
         this.loadResultList = this.loadResultList.bind(this);
         this.getMaxLap = this.getMaxLap.bind(this);
@@ -32,8 +36,10 @@ class ResultListTeam extends Component {
             })
             .then(data => {
                 this.setState({
-                    bbutTeamResults: data,
-                    fetchTime: this.getTime()
+                    teamDtos: data.teamDtos,
+                    teamMinSize: data.teamMinSize,
+                    fetchTime: this.getTime(),
+                    loadComplete: true
                 })
             })
             .catch(console.log)
@@ -45,14 +51,21 @@ class ResultListTeam extends Component {
 
     getMaxLap() {
         const finalMax = 26;
-        const currentMax = Math.max.apply(Math, this.state.bbutTeamResults.map(result => result.totalLaps));
+        const currentMax = Math.max.apply(Math, this.state.teamDtos.map(result => result.totalLaps));
 
         return currentMax > finalMax ? currentMax : finalMax;
     }
 
     render() {
+        if (!this.state.loadComplete) {
+            return <div></div>
+        }
 
-        const resultItems = this.state.bbutTeamResults
+        if (!this.state.teamDtos || this.state.teamDtos.length < 1) {
+            return <div className="white">Lagresultat visas endast om det finns lag med {this.state.teamMinSize} eller fler deltagare</div>
+        }
+
+        const resultItems = this.state.teamDtos
             .flatMap((team) => team.participants)
             .map((participant) => {
                 return (
@@ -60,7 +73,7 @@ class ResultListTeam extends Component {
                 )
             });
 
-        const totalTeams = this.state.bbutTeamResults
+        const totalTeams = this.state.teamDtos
             .map((team) => {
                 return (
                     <tr key={team.name}>
