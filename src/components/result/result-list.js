@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import ResultItem from "./result-item";
 import SockJsClient from "react-stomp";
 import BbutTable from "../bbuttable/bbut-table";
+import {Title} from "../title/title";
 
 class ResultList extends Component {
 
@@ -88,6 +89,12 @@ class ResultList extends Component {
                 )
             });
 
+        const title = (type) => {
+            const timestamp = new Date().toISOString();
+            const typeString = type ? type + " " + timestamp : timestamp;
+            return "Result " + typeString;
+        };
+
         return (
             <div>
                 <SockJsClient url={"/api/live"} topics={["/topics/results"]}
@@ -100,6 +107,7 @@ class ResultList extends Component {
                               }}
                               debug={true}/>
 
+                <Title title={title(this.state.type)} />
                 <BbutTable headers={headerItems()}
                            items={resultItems}
                            showTeamsColumn={this.state.settings.resultView.showTeamsColumn}

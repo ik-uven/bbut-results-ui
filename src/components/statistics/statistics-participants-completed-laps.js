@@ -3,6 +3,7 @@ import {CartesianGrid, Label, Line, LineChart, Tooltip, XAxis} from "recharts";
 import YAxis from "recharts/lib/cartesian/YAxis";
 import {scaleLinear} from 'd3-scale';
 import "./statistics.css"
+import {Title} from "../title/title";
 
 const CustomTooltip = ({active, payload, label}) => {
     if (active) {
@@ -74,6 +75,7 @@ class StatisticsParticipantsCompletedLaps extends Component {
 
         return (
             <div>
+                <Title title="Laps burn down" />
                 <div className="left white text-margin">Avklarade varv per deltagare</div>
                 <LineChart
                     fill="#ffffff"

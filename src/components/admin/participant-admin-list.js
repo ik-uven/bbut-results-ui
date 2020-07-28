@@ -3,6 +3,7 @@ import {classTranslator} from "../text-service";
 import "../compontents.css"
 import EditModal from "./edit-modal";
 import DeleteModal from "./delete-modal";
+import {Title} from "../title/title";
 
 const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", participantClass: "MEN"};
 
@@ -166,45 +167,49 @@ class ParticipantAdminList extends Component {
         };
 
         return (
-            <table className="table table-dark table-bordered table-sm">
-                <tbody>
-                <tr>
-                    <td className="center">#</td>
-                    <td className="center">Förnamn</td>
-                    <td className="center">Efternamn</td>
-                    <td className="center">Klubb</td>
-                    <td className="center">Lagnamn</td>
-                    <td className="center">Klass</td>
-                    <td className="center">Status</td>
-                    <td>
-                        <EditModal
-                            trigger={open => <button className="btn btn-primary btn-sm" onClick={open}>Ny...</button>}
-                            participant={defaultCurrentParticipant}
-                            updateParticipant={updateParticipant}/>
-                    </td>
-                </tr>
-
-                {this.state.participants.length > 0 ? (
-                    this.state.participants.map((participant) =>
-                        <tr key={participant.id}>
-                            <td>{participant.id}</td>
-                            <td>{participant.firstName}</td>
-                            <td>{participant.lastName}</td>
-                            <td>{participant.club}</td>
-                            <td>{participant.team}</td>
-                            <td>{classTranslator(participant.participantClass)}</td>
-                            <td>{statusButtons(participant)}</td>
-                            {actionButtons(participant)}
-                        </tr>
-                    )
-                ) : (
+            <div>
+                <Title title="Administration"/>
+                <table className="table table-dark table-bordered table-sm">
+                    <tbody>
                     <tr>
-                        <td>No users</td>
+                        <td className="center">#</td>
+                        <td className="center">Förnamn</td>
+                        <td className="center">Efternamn</td>
+                        <td className="center">Klubb</td>
+                        <td className="center">Lagnamn</td>
+                        <td className="center">Klass</td>
+                        <td className="center">Status</td>
+                        <td>
+                            <EditModal
+                                trigger={open => <button className="btn btn-primary btn-sm"
+                                                         onClick={open}>Ny...</button>}
+                                participant={defaultCurrentParticipant}
+                                updateParticipant={updateParticipant}/>
+                        </td>
                     </tr>
-                )}
 
-                </tbody>
-            </table>
+                    {this.state.participants.length > 0 ? (
+                        this.state.participants.map((participant) =>
+                            <tr key={participant.id}>
+                                <td>{participant.id}</td>
+                                <td>{participant.firstName}</td>
+                                <td>{participant.lastName}</td>
+                                <td>{participant.club}</td>
+                                <td>{participant.team}</td>
+                                <td>{classTranslator(participant.participantClass)}</td>
+                                <td>{statusButtons(participant)}</td>
+                                {actionButtons(participant)}
+                            </tr>
+                        )
+                    ) : (
+                        <tr>
+                            <td>No users</td>
+                        </tr>
+                    )}
+
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

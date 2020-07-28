@@ -3,6 +3,7 @@ import SockJsClient from "react-stomp";
 import "../compontents.css"
 import stateTranslator from "../text-service";
 import Switch from "../switch/switch";
+import {Title} from "../title/title";
 
 class LapRegistrator extends Component {
 
@@ -179,6 +180,7 @@ class LapRegistrator extends Component {
                               }}
                               debug={true}/>
 
+                <Title title="Lap registration" />
                 <table className="table table-dark table-bordered table-sm" style={{width: 4 + '%'}}>
                     <tbody>
                     <tr>

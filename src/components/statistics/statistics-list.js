@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import StatisticsItem from "./statistics-item";
 import BbutTable from "../bbuttable/bbut-table";
+import {Title} from "../title/title";
 
 class StatisticsList extends Component {
 
@@ -83,6 +84,7 @@ class StatisticsList extends Component {
 
         return (
             <div>
+                <Title title="Lap statistics" />
                 <BbutTable headers={headerItems()}
                            items={statisticsItems}
                            showTeamsColumn={this.state.settings.resultView.showTeamsColumn}

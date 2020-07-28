@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import ResultItemTeam from "./result-item-team";
 import "../compontents.css"
 import BbutTable from "../bbuttable/bbut-table";
+import {Title} from "../title/title";
 
 class ResultListTeam extends Component {
 
@@ -60,8 +61,11 @@ class ResultListTeam extends Component {
                 )
             });
 
+        const title = "Result teams " + new Date().toISOString();
+
         return (
             <div>
+                <Title title={title} />
                 <table className="team-table">
                     <tbody>
                     <tr>
