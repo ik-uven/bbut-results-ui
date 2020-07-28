@@ -3,6 +3,7 @@ import ResultItem from "./result-item";
 import SockJsClient from "react-stomp";
 import BbutTable from "../bbuttable/bbut-table";
 import {Title} from "../title/title";
+import moment from "moment-timezone";
 
 class ResultList extends Component {
 
@@ -13,6 +14,7 @@ class ResultList extends Component {
             type: props.match.params.id,
             clientConnected: false,
             results: [],
+            fetchTime: "",
             settings: {
                 resultView: {
                     numberOfColumns: 26,
@@ -38,7 +40,10 @@ class ResultList extends Component {
                 return response.json()
             })
             .then(data => {
-                this.setState({results: data})
+                this.setState({
+                    results: data,
+                    fetchTime: this.getTime()
+                })
             })
             .catch(console.log)
     }
@@ -52,6 +57,10 @@ class ResultList extends Component {
                 this.setState({settings: data})
             })
             .catch(console.log)
+    }
+
+    getTime() {
+        return moment().tz("Europe/Stockholm").format("YYYY-MM-DD hh:mm");
     }
 
     getHighestLapCount() {
@@ -90,7 +99,7 @@ class ResultList extends Component {
             });
 
         const title = (type) => {
-            const timestamp = new Date().toISOString();
+            const timestamp = this.state.fetchTime;
             const typeString = type ? type + " " + timestamp : timestamp;
             return "Result " + typeString;
         };
@@ -98,7 +107,10 @@ class ResultList extends Component {
         return (
             <div>
                 <SockJsClient url={"/api/live"} topics={["/topics/results"]}
-                              onMessage={(data) => this.setState({results: data})} ref={(client) => {this.clientRef = client}}
+                              onMessage={(data) => this.setState({
+                                  results: data,
+                                  fetchTime: this.getTime()
+                              })} ref={(client) => {this.clientRef = client}}
                               onConnect={() => {
                                   this.setState({clientConnected: true})
                               }}

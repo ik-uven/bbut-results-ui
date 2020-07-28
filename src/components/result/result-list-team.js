@@ -3,6 +3,7 @@ import ResultItemTeam from "./result-item-team";
 import "../compontents.css"
 import BbutTable from "../bbuttable/bbut-table";
 import {Title} from "../title/title";
+import moment from "moment-timezone";
 
 class ResultListTeam extends Component {
 
@@ -11,7 +12,8 @@ class ResultListTeam extends Component {
 
         this.state = {
             clientConnected: false,
-            bbutTeamResults: []
+            bbutTeamResults: [],
+            fetchTime: ""
         };
 
         this.loadResultList = this.loadResultList.bind(this);
@@ -29,9 +31,16 @@ class ResultListTeam extends Component {
                 return response.json()
             })
             .then(data => {
-                this.setState({bbutTeamResults: data})
+                this.setState({
+                    bbutTeamResults: data,
+                    fetchTime: this.getTime()
+                })
             })
             .catch(console.log)
+    }
+
+    getTime() {
+        return moment().tz("Europe/Stockholm").format("YYYY-MM-DD hh:mm");
     }
 
     getMaxLap() {
@@ -61,7 +70,7 @@ class ResultListTeam extends Component {
                 )
             });
 
-        const title = "Result teams " + new Date().toISOString();
+        const title = "Result teams " + this.state.fetchTime;
 
         return (
             <div>
