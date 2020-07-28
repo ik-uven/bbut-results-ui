@@ -6,7 +6,7 @@ export default ({ close }) => (
     <div className="menu">
         <ul>
             <li>
-                <NavLink exact onClick={close} activeClassName="current" to="/results?hideMenu=true">
+                <NavLink exact onClick={close} activeClassName="current" to="/results">
                     Resultat
                 </NavLink>
             </li>
