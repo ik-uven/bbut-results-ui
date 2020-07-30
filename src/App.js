@@ -10,6 +10,7 @@ import StatisticsList from "./components/statistics/statistics-list";
 import StatisticsParticipantsCompletedLaps from "./components/statistics/statistics-participants-completed-laps";
 import Demographics from "./components/statistics/demographics/demographics";
 import MenuView from "./components/menu/MenuView";
+import Upload from "./components/upload/Upload";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                     <Route exact path={["/results", "/results/:id"]} component={ResultList}/>
                     <Route path="/registrator" component={LapRegistrator}/>
                     <Route path="/admin" component={ParticipantAdminList}/>
+                    <Route path="/import" component={Upload}/>
                     <Route path="/reader" component={BbutQrReader}/>
                     <Route path="/statistics" exact component={StatisticsList}/>
                     <Route path="/statistics/completedlaps" exact component={StatisticsParticipantsCompletedLaps}/>
