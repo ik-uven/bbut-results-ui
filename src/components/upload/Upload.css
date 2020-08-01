@@ -114,28 +114,25 @@
 }
 
 .Upload button {
-  font-family: "Roboto medium", sans-serif;
-  font-size: 14px;
-  display: inline-block;
-  height: 36px;
-  min-width: 88px;
-  padding: 6px 16px;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  border-radius: 2px;
-  background: rgba(103, 58, 183, 1);
-  color: #fff;
-  outline: 0;
+  background-color:#7892c2;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  border:1px solid #4e6096;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:14px;
+  padding:3px 10px;
+  text-decoration:none;
+}
+.Upload button:hover {
+  background-color:#476e9e;
+}
+.Upload button:active {
+  position:relative;
+  top:1px;
 }
 
 .Upload button:disabled {

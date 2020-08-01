@@ -126,7 +126,6 @@ class LapRegistrator extends Component {
                     <tr key={result.id}>
                         <td>{result.id}</td>
                         <td>{result.firstName + " " + result.lastName}</td>
-                        <td>{stateTranslator(result.participantState)}</td>
                         <td>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
                         <td className={classValue}>&nbsp;</td>
                         <td>
@@ -151,15 +150,15 @@ class LapRegistrator extends Component {
                         <td>
                             <button value="activate"
                                     disabled={result.participantState === "ACTIVE"}
-                                    className={result.participantState === "ACTIVE" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>Aktivera
+                                    className={result.participantState === "ACTIVE" ? "bbut-button-success" : "bbut-button"}
+                                    onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{stateTranslator("ACTIVE")}
                             </button>
                         </td>
                         <td>
                             <button value="resign"
                                     disabled={result.participantState === "RESIGNED"}
-                                    className={result.participantState === "RESIGNED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>Avsluta
+                                    className={result.participantState === "RESIGNED" ? "bbut-button-warning" : "bbut-button"}
+                                    onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{stateTranslator("RESIGNED")}
                             </button>
                         </td>
                     </tr>
@@ -197,7 +196,6 @@ class LapRegistrator extends Component {
                     <tr>
                         <td className="center">#</td>
                         <td className="center">Namn</td>
-                        <td className="center">Status</td>
                         <td className="center" colSpan={2}>Varv</td>
                         <td className="center">Hantera varv</td>
                         <td className="center" colSpan={4}>Hantera status</td>

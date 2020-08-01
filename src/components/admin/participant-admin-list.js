@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {classTranslator} from "../text-service";
+import stateTranslator, {classTranslator} from "../text-service";
 import "../compontents.css"
 import EditModal from "./edit-modal";
 import DeleteModal from "./delete-modal";
@@ -117,28 +117,27 @@ class ParticipantAdminList extends Component {
                 <div>
                     <button value="activate"
                             disabled={participant.participantState === "ACTIVE"}
-                            className={participant.participantState === "ACTIVE" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "ACTIVE")}>Aktivera
+                            className={participant.participantState === "ACTIVE" ? "bbut-button-success" : "bbut-button"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "ACTIVE")}>{stateTranslator("ACTIVE")}
                     </button>
                     &nbsp;
                     <button value="resign"
                             disabled={participant.participantState === "RESIGNED"}
-                            className={participant.participantState === "RESIGNED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>Avsluta
+                            className={participant.participantState === "RESIGNED" ? "bbut-button-warning" : "bbut-button"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>{stateTranslator("RESIGNED")}
                     </button>
                     &nbsp;
                     <button value="noShow"
                             disabled={participant.participantState === "NO_SHOW" || hasRegisteredLaps}
-                            className={participant.participantState === "NO_SHOW" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>Ej start
+                            className={participant.participantState === "NO_SHOW" ? "bbut-button-warning" : "bbut-button"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>{stateTranslator("NO_SHOW")}
                     </button>
                     &nbsp;
                     <button value="registered"
                             disabled={participant.participantState === "REGISTERED" || hasRegisteredLaps}
-                            className={participant.participantState === "REGISTERED" ? "btn btn-success btn-sm" : "btn btn-primary btn-sm"}
-                            onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>Anmäld
+                            className={participant.participantState === "REGISTERED" ? "bbut-button-warning" : "bbut-button"}
+                            onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>{stateTranslator("REGISTERED")}
                     </button>
-
                 </div>
             );
         };
@@ -148,14 +147,14 @@ class ParticipantAdminList extends Component {
             return (
                 <td>
                     <EditModal
-                        trigger={open => <button onClick={open} className="btn btn-primary btn-sm">Ändra</button>}
+                        trigger={open => <button onClick={open} className="bbut-button">Ändra</button>}
                         participant={participant}
                         updateParticipant={updateParticipant}/>
                     &nbsp;
                     <DeleteModal
                         trigger={open =>
                             <button
-                                className="btn btn-primary btn-sm"
+                                className="bbut-button"
                                 disabled={participant.participantState !== "REGISTERED"}
                                 onClick={open}>Ta bort</button>
                         }
@@ -181,7 +180,7 @@ class ParticipantAdminList extends Component {
                         <td className="center">Status</td>
                         <td>
                             <EditModal
-                                trigger={open => <button className="btn btn-primary btn-sm"
+                                trigger={open => <button className="bbut-button"
                                                          onClick={open}>Ny...</button>}
                                 participant={defaultCurrentParticipant}
                                 updateParticipant={updateParticipant}/>

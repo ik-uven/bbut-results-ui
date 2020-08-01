@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./admin.css"
-import {classTranslator} from "../text-service";
+import stateTranslator, {classTranslator} from "../text-service";
 
 const EditParticipant = (props) => {
 
@@ -94,11 +94,11 @@ const EditParticipant = (props) => {
                                 </label>
                             </div>
                         </td>
-                        <td>{participant.participantState}</td>
+                        <td>{stateTranslator(participant.participantState)}</td>
                         <td>
-                            <button className="btn btn-primary btn-sm">Spara</button>
+                            <button className="bbut-button">Spara</button>
                             &nbsp;
-                            <button className="btn btn-primary btn-sm" onClick={props.close}>Avbryt</button>
+                            <button className="bbut-button" onClick={props.close}>Avbryt</button>
                         </td>
                     </tr>
                     </tbody>
