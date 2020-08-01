@@ -25,6 +25,11 @@ export default ({ close }) => (
                     Lag
                 </NavLink>
             </li>
+            <li className="submenu">
+                <NavLink exact onClick={close} activeClassName="current" to="/api/participants/download">
+                    Exportera till Excel
+                </NavLink>
+            </li>
             <li>
                 <NavLink onClick={close} activeClassName="current" to="/registrator">
                     Varvregistrering
