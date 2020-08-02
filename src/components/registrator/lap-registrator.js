@@ -150,14 +150,14 @@ class LapRegistrator extends Component {
                         <td>
                             <button value="activate"
                                     disabled={result.participantState === "ACTIVE"}
-                                    className={result.participantState === "ACTIVE" ? "bbut-button-success" : "bbut-button"}
+                                    className={result.participantState === "ACTIVE" ? "bbut-button button-success" : "bbut-button button"}
                                     onClick={(e) => this.changeParticipantState(result.id, "ACTIVE")}>{stateTranslator("ACTIVE")}
                             </button>
                         </td>
                         <td>
                             <button value="resign"
                                     disabled={result.participantState === "RESIGNED"}
-                                    className={result.participantState === "RESIGNED" ? "bbut-button-warning" : "bbut-button"}
+                                    className={result.participantState === "RESIGNED" ? "bbut-button button-warning" : "bbut-button button"}
                                     onClick={(e) => this.changeParticipantState(result.id, "RESIGNED")}>{stateTranslator("RESIGNED")}
                             </button>
                         </td>

@@ -22,10 +22,10 @@ const DeleteModal = ({trigger, participant, deleteRow}) => {
                     <div className="delete">
                         <div>Ta bort ({participant.id}) {participant.firstName + " " + participant.lastName}?</div>
                         <div className="buttons">
-                            <button className="bbut-button-danger" onClick={() => deleteRow(participant.id)}>Ta bort
+                            <button className="bbut-button button-danger" onClick={() => deleteRow(participant.id)}>Ta bort
                             </button>
                             &nbsp;
-                            <button className="bbut-button"
+                            <button className="bbut-button button"
                                     onClick={close}>Avbryt
                             </button>
                         </div>

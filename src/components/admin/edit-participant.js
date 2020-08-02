@@ -96,9 +96,9 @@ const EditParticipant = (props) => {
                         </td>
                         <td>{stateTranslator(participant.participantState)}</td>
                         <td>
-                            <button className="bbut-button">Spara</button>
+                            <button className="bbut-button button">Spara</button>
                             &nbsp;
-                            <button className="bbut-button" onClick={props.close}>Avbryt</button>
+                            <button className="bbut-button button" onClick={props.close}>Avbryt</button>
                         </td>
                     </tr>
                     </tbody>

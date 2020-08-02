@@ -10,10 +10,10 @@ const stateTranslator = (participantState) => {
             translation = "Aktiv";
             break;
         case "RESIGNED":
-            translation = "Avslutat";
+            translation = "Avslutad";
             break;
         case "NO_SHOW":
-            translation = "Ej start";
+            translation = "Avhoppad";
             break;
         default:
             break;

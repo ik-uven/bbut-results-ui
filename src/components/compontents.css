@@ -23,69 +23,68 @@ hr {
 }
 
 .bbut-button {
-    background-color:#7892c2;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
     border-radius:5px;
-    border:1px solid #4e6096;
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
-    font-family:Arial;
+    font-family: Arial, sans-serif;
     font-size:14px;
-    padding:3px 10px;
+    padding:3px 3px;
     text-decoration:none;
+    width: 80px;
 }
-.bbut-button:hover {
+
+.bbut-button.button {
+    background-color:#7892c2;
+    border:1px solid #4e6096;
+}
+
+.bbut-button.button:hover {
     background-color:#476e9e;
 }
-.bbut-button:active {
+.bbut-button.button:active {
     position:relative;
     top:1px;
 }
 
 .bbut-button.disabled, .bbut-button:disabled {
-    opacity: 0.25;
+    opacity: 0.35;
+    background-color:#4e6096;
+}
+
+.bbut-button.button-success.disabled, .bbut-button.button-success:disabled {
+    opacity: 1;
     background-color:transparent;
 }
 
-.bbut-button-success {
+.bbut-button.button-warning.disabled, .bbut-button.button-warning:disabled {
+    opacity: 1;
     background-color:transparent;
-    border-radius:5px;
+}
+
+.bbut-button.button-success {
     border:1px solid #4e6096;
-    display:inline-block;
-    cursor:pointer;
     color:#20c94d;
-    font-family:Arial;
-    font-size:14px;
-    padding:3px 10px;
-    text-decoration:none;
 }
 
-.bbut-button-success:active {
+.bbut-button.button-success:active {
     position:relative;
     top:1px;
 }
 
-.bbut-button-warning {
-    background-color:transparent;
-    border-radius:5px;
+.bbut-button.button-warning {
     border:1px solid #4e6096;
-    display:inline-block;
-    cursor:pointer;
     color: #ffdf7e;
-    font-family:Arial;
-    font-size:14px;
-    padding:3px 10px;
-    text-decoration:none;
 }
 
-.bbut-button-warning:active {
+.bbut-button.button-warning:active {
     position:relative;
     top:1px;
 }
 
-.bbut-button-danger {
+.bbut-button.button-danger {
     background-color: #b21f2d;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
@@ -99,10 +98,10 @@ hr {
     padding:3px 10px;
     text-decoration:none;
 }
-.bbut-button-danger:hover {
+.bbut-button.button-danger:hover {
     background-color: #721c24;
 }
-.bbut-button-danger:active {
+.bbut-button.button-danger:active {
     position:relative;
     top:1px;
 }

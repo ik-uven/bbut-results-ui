@@ -117,25 +117,25 @@ class ParticipantAdminList extends Component {
                 <div>
                     <button value="activate"
                             disabled={participant.participantState === "ACTIVE"}
-                            className={participant.participantState === "ACTIVE" ? "bbut-button-success" : "bbut-button"}
+                            className={participant.participantState === "ACTIVE" ? "bbut-button button-success" : "bbut-button button"}
                             onClick={(e) => this.changeParticipantState(participant.id, "ACTIVE")}>{stateTranslator("ACTIVE")}
                     </button>
                     &nbsp;
                     <button value="resign"
                             disabled={participant.participantState === "RESIGNED"}
-                            className={participant.participantState === "RESIGNED" ? "bbut-button-warning" : "bbut-button"}
+                            className={participant.participantState === "RESIGNED" ? "bbut-button button-warning" : "bbut-button button"}
                             onClick={(e) => this.changeParticipantState(participant.id, "RESIGNED")}>{stateTranslator("RESIGNED")}
                     </button>
                     &nbsp;
                     <button value="noShow"
                             disabled={participant.participantState === "NO_SHOW" || hasRegisteredLaps}
-                            className={participant.participantState === "NO_SHOW" ? "bbut-button-warning" : "bbut-button"}
+                            className={participant.participantState === "NO_SHOW" ? "bbut-button button-warning" : "bbut-button button"}
                             onClick={(e) => this.changeParticipantState(participant.id, "NO_SHOW")}>{stateTranslator("NO_SHOW")}
                     </button>
                     &nbsp;
                     <button value="registered"
                             disabled={participant.participantState === "REGISTERED" || hasRegisteredLaps}
-                            className={participant.participantState === "REGISTERED" ? "bbut-button-warning" : "bbut-button"}
+                            className={participant.participantState === "REGISTERED" ? "bbut-button button-warning" : "bbut-button button"}
                             onClick={(e) => this.changeParticipantState(participant.id, "REGISTERED")}>{stateTranslator("REGISTERED")}
                     </button>
                 </div>
@@ -147,14 +147,14 @@ class ParticipantAdminList extends Component {
             return (
                 <td>
                     <EditModal
-                        trigger={open => <button onClick={open} className="bbut-button">Ändra</button>}
+                        trigger={open => <button onClick={open} className="bbut-button button">Ändra</button>}
                         participant={participant}
                         updateParticipant={updateParticipant}/>
                     &nbsp;
                     <DeleteModal
                         trigger={open =>
                             <button
-                                className="bbut-button"
+                                className="bbut-button button"
                                 disabled={participant.participantState !== "REGISTERED"}
                                 onClick={open}>Ta bort</button>
                         }
@@ -180,7 +180,7 @@ class ParticipantAdminList extends Component {
                         <td className="center">Status</td>
                         <td>
                             <EditModal
-                                trigger={open => <button className="bbut-button"
+                                trigger={open => <button className="bbut-button button"
                                                          onClick={open}>Ny...</button>}
                                 participant={defaultCurrentParticipant}
                                 updateParticipant={updateParticipant}/>
