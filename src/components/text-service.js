@@ -13,7 +13,7 @@ const stateTranslator = (participantState) => {
             translation = "Avslutad";
             break;
         case "NO_SHOW":
-            translation = "Avhoppad";
+            translation = "Frånvarande";
             break;
         default:
             break;

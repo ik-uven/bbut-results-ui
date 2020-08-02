@@ -30,7 +30,7 @@ hr {
     cursor:pointer;
     color:#ffffff;
     font-family: Arial, sans-serif;
-    font-size:14px;
+    font-size:12px;
     padding:3px 3px;
     text-decoration:none;
     width: 80px;
@@ -86,17 +86,8 @@ hr {
 
 .bbut-button.button-danger {
     background-color: #b21f2d;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    border-radius:5px;
     border:1px solid #721c24;
-    display:inline-block;
-    cursor:pointer;
     color:#ffffff;
-    font-family:Arial;
-    font-size:14px;
-    padding:3px 10px;
-    text-decoration:none;
 }
 .bbut-button.button-danger:hover {
     background-color: #721c24;
