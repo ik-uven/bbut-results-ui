@@ -196,7 +196,7 @@ class ParticipantAdminList extends Component {
                                 <td>{participant.club}</td>
                                 <td>{participant.team}</td>
                                 <td>{classTranslator(participant.participantClass)}</td>
-                                <td>{statusButtons(participant)}</td>
+                                <td className="center">{statusButtons(participant)}</td>
                                 {actionButtons(participant)}
                             </tr>
                         )
