@@ -28,7 +28,7 @@ const StatisticsItem = (props) => {
 
     return (
         <tr>
-            <td className="right">{props.statistic.participantId}</td>
+            <td className="right">{props.statistic.startNumber}</td>
             <td>{props.statistic.firstName + " " + props.statistic.lastName}</td>
             <td>{props.statistic.club}</td>
             {props.showTeamsColumn ? <td>{props.statistic.team}</td> : null}

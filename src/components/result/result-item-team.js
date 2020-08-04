@@ -23,7 +23,7 @@ const ResultItemTeam = (props) => {
     return (
         <tr>
             <td style={stateStyle}>{props.participant.team}</td>
-            <td className="right">{props.participant.id}</td>
+            <td className="right">{props.participant.startNumber}</td>
             <td style={stateStyle}>{props.participant.firstName + " " + props.participant.lastName}</td>
             <td style={stateStyle}>{stateTranslator(props.participant.participantState)}</td>
             <td className="right">{completedLapsCount}</td>

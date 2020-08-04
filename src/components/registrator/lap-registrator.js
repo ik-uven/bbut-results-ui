@@ -84,8 +84,8 @@ class LapRegistrator extends Component {
     render() {
 
         const compareOnStateAndStartNumber = (resultA, resultB) => {
-            const num1 = resultA.id;
-            const num2 = resultB.id;
+            const num1 = resultA.startNumber;
+            const num2 = resultB.startNumber;
 
             let comparison = 0;
 
@@ -124,7 +124,7 @@ class LapRegistrator extends Component {
 
                 return (
                     <tr key={result.id}>
-                        <td>{result.id}</td>
+                        <td>{result.startNumber}</td>
                         <td>{result.firstName + " " + result.lastName}</td>
                         <td>{result.laps.filter(lap => lap.state !== "OVERDUE").length}</td>
                         <td className={classValue}>&nbsp;</td>

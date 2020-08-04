@@ -32,7 +32,13 @@ const EditParticipant = (props) => {
                     </tr>
                     <tr key={participant.id}>
                         <td>
-                            {participant.id}
+                            <input
+                                style={{width: 80}}
+                                type="text"
+                                name="startNumber"
+                                value={participant.startNumber}
+                                onChange={handleInputChange}
+                            />
                         </td>
                         <td>
                             <input

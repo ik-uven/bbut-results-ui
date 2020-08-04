@@ -5,7 +5,7 @@ import EditModal from "./edit-modal";
 import DeleteModal from "./delete-modal";
 import {Title} from "../title/title";
 
-const defaultCurrentParticipant = {id: null, firstName: "", lastName: "", club: "", team: "", participantClass: "MEN"};
+const defaultCurrentParticipant = {id: null, startNumber: null, firstName: "", lastName: "", club: "", team: "", participantClass: "MEN"};
 
 class ParticipantAdminList extends Component {
 
@@ -40,6 +40,8 @@ class ParticipantAdminList extends Component {
     }
 
     changeParticipant(id, participant) {
+
+        console.log(participant)
 
         const endPoint = id !== null ? {method: "PUT", url: "/api/admin/participants/" + id} : {
             method: "POST",
@@ -190,7 +192,7 @@ class ParticipantAdminList extends Component {
                     {this.state.participants.length > 0 ? (
                         this.state.participants.map((participant) =>
                             <tr key={participant.id}>
-                                <td>{participant.id}</td>
+                                <td>{participant.startNumber}</td>
                                 <td>{participant.firstName}</td>
                                 <td>{participant.lastName}</td>
                                 <td>{participant.club}</td>

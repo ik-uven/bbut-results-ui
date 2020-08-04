@@ -40,7 +40,7 @@ const ResultItem = (props) => {
 
     return (
         <tr>
-            <td className="right">{props.result.id}</td>
+            <td className="right">{props.result.startNumber}</td>
             <td style={stateStyle}>{props.result.firstName + " " + props.result.lastName}</td>
             <td style={stateStyle}>{props.result.club}</td>
             {teamsColumn()}
