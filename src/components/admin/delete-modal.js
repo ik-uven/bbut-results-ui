@@ -20,7 +20,7 @@ const DeleteModal = ({trigger, participant, deleteRow}) => {
             {close => {
                 return (
                     <div className="delete">
-                        <div>Ta bort ({participant.id}) {participant.firstName + " " + participant.lastName}?</div>
+                        <div>Ta bort ({participant.startNumber}) {participant.firstName + " " + participant.lastName}?</div>
                         <div className="buttons">
                             <button className="bbut-button button-danger" onClick={() => deleteRow(participant.id)}>Ta bort
                             </button>
